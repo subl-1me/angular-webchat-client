@@ -1,0 +1,59 @@
+.btn-new-chat{
+    color:white;
+    background-color: #ef4747;
+    border-color: #ef4747;
+}
+
+.panel{
+    border-radius: 0;
+}
+
+.btn-new-chat:hover{
+    color:white;
+    background-color: #ef4747;
+    border-color: #ef4747;
+    transform: translateY(-4px);
+    transition: .2s ease-in-out;
+}
+
+.modal-body{
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+.btn-toggle-requests:hover{
+    border-color: #ef4747;
+}
+
+@media only screen and (max-width: 990px){
+    .panel{
+        display: none;
+    }
+}
+
+.bottom-menu{
+    width: 100%;
+    text-align: center;
+}
+
+.navbar-bottom{
+    flex-direction: row !important;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 2rem;
+}
+
+.nav-item:hover{
+    cursor: pointer;
+    color: #ef4747;
+    font-weight: bold;
+    transition: .2s ease-in-out
+}
+
+@media only screen and (min-width: 990px){
+    .bottom-menu{
+        display: none;
+    }
+}

@@ -1,0 +1,17 @@
+#user-img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.list-group{
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#send-request:hover{
+    cursor: pointer;
+    font-weight: bold;
+}

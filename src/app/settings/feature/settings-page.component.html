@@ -1,0 +1,110 @@
+<app-navbar></app-navbar>
+<div class="container mt-auto mb-auto">
+    <div class="row">
+        <div class="col-lg-6 col-12 me-auto ms-auto">
+
+            <div class="card shadow-sm settings-card">
+
+                <div class="card-header bg-light">
+                    <div class="controls p-2 d-inline-block rounded bg-back-btn" 
+                    [routerLink]="['/home']">
+                        <fa-icon [icon]="faChevronLeft" class=""></fa-icon>
+                        Back
+                    </div>
+                    <h5 class="text-center">Account settings</h5>
+                </div>
+
+                <div class="card-body  p-3">
+                    <h6 class="text-center">Profile image</h6>
+
+                    <form #settingsForm="ngForm" (ngSubmit)="onSubmit()">
+                        <div class="row text-center">
+                            <div class="col-12 mb-2">
+                                <span class="input-image p-0 d-inline-block" id="basic-addon2">
+                                    <label class="custom-file-upload">
+                                        <input type="file" (change)="handleFile($event)"/>
+                                        <div class="badge bg-edit-icon rounded-circle shadow p-2">
+                                            <fa-icon [icon]="faPenToSquare" class="m-auto"></fa-icon>
+                                        </div>
+                                    </label>
+                                 </span>
+                                <img src="{{imageAsDataUrl[0]}}" id="avatar" class="user-img" *ngIf="imageAsDataUrl !== ''">
+                                <img src="{{userAuth.avatar.url}}" id="avatar" class="user-img" *ngIf="imageAsDataUrl === ''">
+                            </div>
+                            <!-- 
+                            <div class="col-12 mb-2 input-col">
+                                <input type="file" (change)="handleFile($event)">
+                                <br>
+                                <small class="text-danger" *ngIf="serviceMessage !== ''">
+                                    Only images are allowed.
+                                </small>
+                            </div> -->
+
+                            <div class="col-6 ms-auto me-auto">
+                                <label for="username">Username</label>
+                                <input id="username" type="text"
+                                 class="form-control" name="username" [(ngModel)]="username">
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <button class="btn btn-save"
+                                [disabled]="userAuth.username === username && imageAsDataUrl === '' || onLoading">
+                                    <div class="content" *ngIf="!onLoading">
+                                        <fa-icon [icon]="faSave" class="me-1"></fa-icon>
+                                        Save changes
+                                    </div>
+
+                                    <div class="content" *ngIf="onLoading">
+                                        <div class="spinner-border spinner-border-sm" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        Loading...
+                                    </div>
+                                </button>
+                            </div>
+
+                            <div class="col-12 mt-2"
+                             *ngIf="updaterResponse !== '' && updaterResponse !== 'success'">
+                                <small class="text-danger text-center">
+                                    {{updaterResponse}}. 🙁 
+                                </small>
+                            </div>
+
+                            <div class="col-12 mt-2" *ngIf="updaterResponse === 'success'">
+                                <small class="text-success  text-center">
+                                    Profile updated successfully. 🔥  
+                                </small>
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
+
+                    <h6 class="text-danger fw-bold text-decoration-underline"
+                    id="delete-h6" data-bs-toggle="modal" data-bs-target="#deleteSure">
+                        Delete account
+                    </h6>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteSure" tabindex="-1" aria-labelledby="deleteSure" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteSure">Delete account</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Thanks for testing 🙂 ❤ 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn " data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-dark" (click)="removeAccount()">Ok, delete</button>
+        </div>
+      </div>
+    </div>
+</div>

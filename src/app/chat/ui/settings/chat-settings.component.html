@@ -1,0 +1,13 @@
+<div class="chat-settings-control p-2">
+    <form #chatSettingsForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-12">
+                <input type="text" id="chat-name" class="form-control" placeholder="Group name">
+            </div>
+            <div class="col-12">
+                <label for="image">Image</label>
+                <input type="file">
+            </div>
+        </div>
+    </form>
+</div>

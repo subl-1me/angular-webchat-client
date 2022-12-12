@@ -1,0 +1,46 @@
+.btn-accept{
+    color: white;
+    background-color: #ef4747;
+    border-color: #ef4747;
+}
+
+.list-group{
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.list-group-item{
+    border-top: 1px solid #d9d9da;
+}
+
+#user-img, #no-data-illustration{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.no-data-container{
+    height: 80vh;
+}
+
+.btn-accept:hover{
+    color: white;
+    background-color: #ef4747;
+    font-weight: bold;
+    transform: translateY(-3px);    
+    transition: .2s ease-in-out;    
+}
+
+.btn-decline{
+    color: #ef4747;
+    background-color: white;
+    border-color: #ef4747;
+}
+
+.btn-decline:hover{
+    transform: translateX(5px);
+    transition: .2s ease-out;
+    background-color: white;
+    border-color: black;
+}

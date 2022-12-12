@@ -1,0 +1,60 @@
+<div class="list-group p-3">
+
+    <div class="pending-requests" *ngIf="pendingRequests.length > 0">
+        <h6 class="text-muted text-center small">Pending requests</h6>
+        <ng-container *ngFor="let request of pendingRequests">
+            <small class="user">
+                Waiting for {{request.to.username}} response...
+            </small>
+        </ng-container>
+        <hr>
+    </div>
+
+    <div class="empty-messages text-center mt-auto mb-auto" *ngIf="requests.length === 0">
+        <h6 class="text-muted">No request for you yet.</h6>
+    </div>
+        
+    <ng-container *ngFor="let request of requests">
+        <div class="list-group-item text-center bg-light shadow-sm  mb-2 mt-2 p-3">
+            <div class="row">
+                <div class="col-sm-3 col-12">
+                    <img src="{{request.from.avatar.url}}" id="user-img" class="rounded-circle shadow-sm">
+                </div>
+                <div class="col-sm-9 col-12 mt-auto mb-auto">
+                    <small class="text-muted">{{request.createdAt | date:'shortTime'}}</small>
+                    <h6 *ngIf="request.type === 'duo'">
+                        <b>{{request.from.username}}</b> 
+                        sent you a request to start a conversation.
+                    </h6>
+                    <h6 *ngIf="request.type === 'group'">
+                        <b>{{request.from.username}}</b> 
+                        sent you a request to join a group.
+                    </h6>
+
+                    <div class="request-controls">
+                        <button type="submit" class="btn btn-accept me-2"
+                        (click)="acceptRequest(request)" *ngIf="!isLoading">
+                            <fa-icon [icon]="faCheck" class="me-1"></fa-icon>
+                            ACCEPT
+                        </button>
+                        <button type="button" class="btn btn-accept me-2"
+                        disabled *ngIf="isLoading">
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            PROCESSING...
+                        </button>
+                        <button type="submit" class="btn btn-decline"
+                        (click)="declineRequest(request)" [disabled]="isLoading">
+                            <fa-icon [icon]="faXmark" class="me-1"></fa-icon>
+                            DECLINE
+                        </button>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <small class="text-muted float-end mt-2">Expires in 1 minute</small>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

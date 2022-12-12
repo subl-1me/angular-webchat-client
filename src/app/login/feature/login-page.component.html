@@ -1,0 +1,60 @@
+<div class="container-fluid">
+    <div class="row align-items-center h-100">
+        <div class="col-12 col-md-8 welcome-column">
+            <div class="presentation-container text-center">
+                <div class="row">
+                    <div class="col-md-6 col-12 mt-auto mb-auto me-auto ms-auto text-white">
+                        <img src="../../../assets/images/connect-presentation.svg" class="img-fluid">
+
+                        <h1 class="fw-bold">
+                            Welcome Back,
+                        </h1>
+                        <h3>Connect with your friends and text with <b>privacity</b></h3>
+                        <hr>
+                        <h5>Log in to start</h5>    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-3 col-md-4">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <form [formGroup]="loginForm" (ngSubmit)="login()">
+                        <div class="row">   
+                            <div class="col-12 mt-3">
+                                <input type="text" formControlName="username" 
+                                class="form-control p-3" placeholder="Username">
+                            </div>
+                            <div class="col-12 mt-3">
+                                <input type="password" formControlName="password" class="form-control p-3" placeholder="Password">
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-create mt-3 p-3 mb-3 w-100" 
+                        (click)="login()" *ngIf="!isFormLoading">
+                            Login
+                        </button>
+                        <button type="button" class="btn btn-create mt-3 p-3 mb-3 w-100" 
+                        *ngIf="isFormLoading" disabled>
+                            <div class="spinner-grow spinner-grow-sm" role="status">
+                                <span class="visually-hidden"> Loading...</span>
+                            </div>
+                            Loading...
+                        </button>
+
+                        <h6 id="serviceErrorMessage" *ngIf="serviceErrorMessage !== ''" 
+                        class="small text-danger text-center service-error">
+                            {{serviceErrorMessage}}
+                        </h6>
+                    </form>
+                    
+                    <hr>
+                    <div class="login-redirect text-center small">
+                        <h6 class="mb-0">Don't have account yet?</h6>
+                        <span class="text-decoration-underline" [routerLink]="['/register']">Create account</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

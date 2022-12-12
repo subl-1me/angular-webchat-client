@@ -1,0 +1,27 @@
+.card{
+    border: 0;
+    height: 90vh;
+    max-height: 90vh;
+}
+
+.img-fluid{
+    width: 50% !important;
+}
+
+.btn-invite{
+    background-color: #ef4747;
+    border-color: #ef4747;
+    color: white;
+}
+
+.btn-invite:hover{
+    background-color: #cd2626;
+    border-color: #c01b1b;
+    color: white;
+    transition: .3s ease-in-out;
+}
+
+#chatting-illustration{
+    max-width: 500px;
+    max-height: 500px;
+}

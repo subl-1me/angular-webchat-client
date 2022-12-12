@@ -1,0 +1,66 @@
+.user-img{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.settings-card{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.input-image{
+    position: absolute;
+    left: 53%;
+}
+
+
+.bg-edit-icon{
+    background: #ef4747 !important;
+    border-color: #ef4747 !important;
+    color: white;
+}
+
+.bg-edit-icon:hover{
+    background: #e62c2c !important;
+    cursor: pointer;
+    transform: translateY(-5px);
+    transition: .2s ease-in-out;
+}
+
+input[type="file"]{
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap; /* 1 */
+    clip-path: inset(50%);
+    border: 0;
+}
+
+.btn-save{
+    color: white;
+    background-color: #ef4747;
+    border-color: #ef4747;
+}
+
+.bg-back-btn{
+    color: white;
+    background-color: #ef4747;
+    border-color: #ef4747; 
+}
+
+.bg-back-btn:hover{
+    cursor: pointer;
+}
+
+#delete-h6:hover{
+    cursor: pointer;
+}
+
+.input-col{
+    overflow: hidden;
+}

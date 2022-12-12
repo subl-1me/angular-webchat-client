@@ -1,0 +1,37 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row align-items-center h-100">
+            <div class="col-12">
+                <div class="presentation-container text-center mt-auto mb-auto">
+                    <img src="../../../../../assets/images/chatting-illustration.png" class="img-fluid">
+                    <h5 class="text-muted">Text with your friends.</h5>
+                    <h6 class="text-muted">Select a chat or create it</h6>
+
+                    <button class="btn btn-invite" data-bs-toggle="modal"
+                    data-bs-target="#inviteModal2" (click)="setInviteDuo()">Create chat</button>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>
+
+
+<!-- Invite modal -->
+<div class="modal fade" id="inviteModal2" tabindex="-1" aria-labelledby="inviteModal2Label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="inviteModal2Label">
+            New conversation
+        </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+            <app-invite-modal-body [inviteType]="inviteType"></app-invite-modal-body>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+</div>

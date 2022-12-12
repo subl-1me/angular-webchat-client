@@ -1,0 +1,30 @@
+<div class="invite-container">
+    
+    <div class="duo-invitation" *ngIf="inviteType === 'duo'">
+        <h5 class="">Send a request to your friend</h5>
+        <img src="../../../assets/images/conversation-image.svg" class="img-fluid rounded-circle">
+    </div>
+
+    <div class="group-invitation" *ngIf="inviteType === 'group'">
+        <h5 class="mb-0"><b>Expand</b> the conversation</h5>
+        <h5 class="mb-0">to other people</h5>
+        <img src="../../../assets/images/group-invite.svg" class="img-fluid rounded">
+    </div>
+    
+    <h6 class="text-muted">Type your friend's username:</h6>
+    <form #searchUserForm="ngForm">
+        <input type="text" placeholder="Username" name="username" 
+        [(ngModel)]="username" class="form-control p-2">
+    </form>
+
+    <!-- <div class="some-messages text-muted p-2 bg-light rounded mt-2">
+        <fa-icon [icon]="faInfoCircle"></fa-icon>
+        <h6 class="small mb-0">- You will be notified when a request was expired.</h6>
+        <h6 class="small">- Users can declined or accepted it.</h6>
+    </div> -->
+
+    <div class="searched-users mt-2">
+        <app-user-list [username]="username" [chatId]="chatId"></app-user-list>
+    </div>
+
+</div>

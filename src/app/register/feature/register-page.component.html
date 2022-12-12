@@ -1,0 +1,67 @@
+<div class="container-fluid">
+    <div class="row align-items-center h-100">
+        <div class="col-12 col-md-8 welcome-column">
+            <div class="presentation-container text-center">
+                <div class="row">
+                    <div class="col-md-6 col-12 mt-auto mb-auto me-auto ms-auto text-white">
+                        <img src="../../../assets/images/connect-presentation.svg" class="img-fluid">
+
+                        <h1 class="fw-bold">
+                            Welcome to Sendit
+                            <fa-icon [icon]="faMessage"></fa-icon>
+                        </h1>
+                        <h3>Connect with your friends and text with <b>privacity</b></h3>
+                        <hr>
+                        <h5>Create an account to start</h5>    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-3 col-md-4">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <form [formGroup]="registerForm" (ngSubmit)="register()">
+                        <div class="row">   
+                            <div class="col-12 mt-3">
+                                <input type="text" formControlName="username" 
+                                class="form-control p-3" placeholder="Username">
+                            </div>
+                            <div class="col-12 mt-3">
+                                <input type="email" formControlName="email" class="form-control p-3" placeholder="Email">
+                            </div>
+                            <div class="col-12 mt-3">
+                                <input type="password" formControlName="password" class="form-control p-3" placeholder="Password">
+                            </div>
+                            <div class="col-12 mt-3">
+                                <input type="password" formControlName="confirmPassword" class="form-control p-3" placeholder="Confirm your password">
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-create mt-3 p-3 mb-3 w-100" 
+                        (click)="register()" *ngIf="!isFormLoading">
+                            Create account
+                        </button>
+                        <button type="button" class="btn btn-create mt-3 p-3 mb-3 w-100" 
+                        (click)="register()" *ngIf="isFormLoading" disabled>
+                            <div class="spinner-grow spinner-grow-sm" role="status">
+                                <span class="visually-hidden"> Creating...</span>
+                            </div>
+                            Creating...
+                        </button>
+
+                        <h6 id="serviceErrorMessage" *ngIf="serviceErrorMessage !== ''" 
+                        class="small text-danger text-center service-error">
+                            {{serviceErrorMessage}}
+                        </h6>
+                    </form>
+                    
+                    <hr>
+                    <div class="login-redirect text-center small">
+                        <h6 class="mb-0">Already register?</h6>
+                        <span class="text-decoration-underline" [routerLink]="['/login']">Login</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

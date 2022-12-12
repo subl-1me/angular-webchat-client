@@ -1,0 +1,44 @@
+.container-fluid{
+    height: 100vh;
+    background-color: #ff5a5a !important;   
+}
+
+.btn-create{
+    color: white;
+    background-color: #ff5a5a;
+    border-color: #ff5a5a;
+}
+
+.btn-create:hover{
+    color: white;
+    font-weight: bold;
+    background-color: #ef4747;
+    border-color: #ef4747;
+    transition: .1s ease-in-out;
+}
+
+.bg-header{
+    background-color: #dfd0ff;
+    border-color: #793cff;
+}
+
+.message{
+    border-bottom-left-radius: 0;
+    padding: 1rem !important;
+}
+
+.service-error{
+    animation: appear .2s forwards;
+}
+
+@keyframes appear {
+    from{
+        transform: translateY(-20px);
+        opacity: 10%;
+    }
+    to{
+        transform: translateY(0px);
+        opacity: 100%;
+
+    }
+}

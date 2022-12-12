@@ -1,0 +1,37 @@
+.navbar{
+    background-color: #ef4747 !important;
+}
+
+.logout-item{
+    text-decoration: none;
+    display: none;
+}
+
+.logout-item:hover{
+    cursor:pointer;
+}
+
+#my-avatar{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid white;
+    padding: 10%;
+    object-fit: cover;
+}
+
+.dropdown-menu[data-bs-popper]{
+    top: unset;
+    left: unset;
+    right: 10px;
+}
+
+@media only screen and (max-width: 1000px){
+    .navbar-toggler{
+        display: none;
+    }
+
+    .logout-item{
+        display: block;
+    }
+}

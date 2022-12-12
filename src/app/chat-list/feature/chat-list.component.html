@@ -1,0 +1,144 @@
+<div class="list-group p-2 list-container">
+
+    <ng-container *ngIf="chats.length === 0 && !isListLoading">
+        <div class="no-chats-message text-center">
+            <img src="../../../assets/images/no-data-illustration.webp.png"
+            id="no-data-illustration">
+            <h6 class="text-muted">Your chat list is empty. Invite some friends.</h6>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="isListLoading">
+        <app-loader-skeleton></app-loader-skeleton>
+        <app-loader-skeleton></app-loader-skeleton>
+        <app-loader-skeleton></app-loader-skeleton>
+    </ng-container>
+
+    <ng-container *ngFor="let chat of chats">
+        <div class="list-group-item bg-light p-3 " id="chat-{{chat._id}}" (click)="openChat($event, chat)">
+            <div class="row">
+                <div class="col-12 float-end">  
+                    <ng-container *ngFor="let notification of messageNotifications">
+                        <div class="badge bg-new-message float-end"
+                        *ngIf="notification.chatId === chat._id">
+                            {{notification.counter}}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="col-xxl-2 col-xl-3 col-lg-4 col-12 me-4 user-images"
+                *ngIf="chat.participants.length !== 0">
+                    <div class="circle shadow me-auto ms-auto">
+                        <div class="row h-100 row-cols-2 align-content-around" *ngIf="chat.participants.length < 3">
+                            <ng-container  *ngFor="let user of chat.participants">
+                                <div class="col-12 p-0 h-100" *ngIf="user._id !== userAuth._id
+                                && chat.participants.length === 1">
+                                    <img src="{{user.avatar.url}}" class="img-fluid" id="user-img">
+                                </div>
+
+                                <div class="col p-0 h-100" *ngIf="user._id !== userAuth._id
+                                && chat.participants.length === 2">
+                                    <img src="{{user.avatar.url}}" class="img-fluid" id="user-img">
+                                </div>
+                            </ng-container>
+                        </div>
+
+                        <div class="row h-100 row-cols-2 align-content-center" *ngIf="chat.participants.length === 3">
+                            <ng-container 
+                            *ngFor="let user of chat.participants; let i = index">
+                                <ng-container *ngIf="user._id !== userAuth._id">
+                                    <div class="col p-0 h-100" *ngIf="i !== 2">
+                                        <img src="{{user.avatar.url}}" class="img-fluid" id="user-img">
+                                    </div>
+                                    <div class="col-12 p-0 h-100" *ngIf="i === 2">
+                                        <img src="{{user.avatar.url}}" class="img-fluid" id="user-img">
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+
+                        <div class="row h-100 row-cols-2 p-2 align-content-center" *ngIf="chat.participants.length >= 4">
+                            <ng-container 
+                            *ngFor="let user of chat.participants; let i = index">
+                                <ng-container *ngIf="user._id !== userAuth._id">
+                                    <div class="col p-0 h-100" *ngIf="i <= 3">
+                                        <img src="{{user.avatar.url}}" class="img-fluid shadow" id="user-img">
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-7 col-xl-6 col-lg-6 col-12 mt-auto mb-auto">
+                    <h4 class="d-inline" 
+                    *ngIf="chat.participants.length === 0">
+                        Only You
+                    </h4>
+                    <ng-container *ngFor="let participant of chat.participants; last as last; let i = index">
+                        <div class="user-list mb-2 d-inline">
+                            <h4 class="d-inline fw-bold" 
+                            *ngIf="i <= 3">
+                                <span *ngIf="last && chat.participants.length == 2"> and </span>
+                                {{participant.username}}<span *ngIf="chat.participants.length > 2 && !last">,
+                                </span> 
+                            </h4>
+                        </div>
+                    </ng-container>
+                    <span class="text-muted h4"
+                    *ngIf="chat.participants.length > 4">
+                        +{{chat.participants.length - 4}} 
+                    </span>
+                    <!-- Last message -->   
+
+
+                    <div class="first-message" 
+                    *ngIf="chat.messages.length === 0 && chat.participants.length > 0">
+                        <h5 class="mt-0 mb-0 text-muted">
+                            Send the first message
+                        </h5>
+                    </div>
+                    <ng-container *ngFor="let message of chat.messages; last as last">
+                        <div class="last-message" *ngIf="last">
+                            <div class="message-bubble rounded text-muted">
+                                <small id="message" 
+                                *ngIf="message.user.username !== userAuth.username && !chat.isGroup">
+                                    {{message.content}}
+                                </small>
+                                <small id="message" 
+                                *ngIf="message.user.username !== userAuth.username && chat.isGroup">
+                                    {{message.user.username}}: {{message.content}}
+                                </small>
+                                <small id="message" *ngIf="message.user.username === userAuth.username">
+                                    You: {{message.content}}
+                                </small>
+                                <small id="message" class="fst-italic" *ngIf="message.images && message.content === ''">
+                                    {{message.user.username}} sended a photo.
+                                </small>
+
+                                <!-- Notifications -->
+                                <small id="message" class="fst-italic"
+                                *ngIf="message.isNotification && message.notificationType === 'user-left'">
+                                    {{message.user.username}} has left.
+                                </small>
+                                <small id="message" class="fst-italic"
+                                *ngIf="message.isNotification && message.notificationType === 'user-joined'">
+                                    {{message.user.username}} has joined
+                                </small>
+                                <!---->
+                                <small class="ms-1">
+                                    - {{stringAsDate(message.createdAt) | date:'shortTime' }}
+                                </small>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+
+                <div class="col-xxl-2 col-xl-2 col-lg-12 col-12 mt-auto mb-auto text-center ms-auto"
+                *ngIf="chat.messages.length === 0 && chat.participants.length > 0">
+                    <div class="badge bg-new-chat">
+                        New
+                    </div>  
+                </div>
+            </div>
+        </div>  
+    </ng-container>
+</div>
