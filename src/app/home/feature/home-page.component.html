@@ -5,208 +5,276 @@
 
 <!-- 2 sections -->
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-4 col-12 p-0">
-            <div class="card border-white bg-light panel h-100">
-                <div class="card-header p-4">
-                    <!-- app invite menu -->
-                    <div class="invite-menu">
-                        <button class="btn btn-new-chat p-2"
-                        data-bs-toggle="modal" data-bs-target="#inviteModal"
-                        (click)="setInviteType()">
-                            <fa-icon [icon]="faPlus" class="me-1"></fa-icon>
-                            New conversation
-                        </button>
-                        <button class="btn btn-toggle-requests float-end p-2"
-                        (click)="toggleRequestsList()" *ngIf="!toggleRequest">
-                            <fa-icon [icon]="faList" class="me-1"></fa-icon>
-                            Requests
-                            <div class="badge btn-new-chat">
-                                {{requests.length}}
-                            </div>
-                        </button>
+  <div class="row">
+    <div class="col-lg-4 col-12 p-0">
+      <div class="card border-white bg-light panel h-100">
+        <div class="card-header p-4">
+          <!-- app invite menu -->
+          <div class="invite-menu">
+            <button
+              class="btn btn-new-chat p-2"
+              data-bs-toggle="modal"
+              data-bs-target="#inviteModal"
+              (click)="setInviteType()"
+            >
+              <fa-icon [icon]="faPlus" class="me-1"></fa-icon>
+              New conversation
+            </button>
+            <button
+              class="btn btn-toggle-requests float-end p-2"
+              (click)="toggleRequestsList()"
+              *ngIf="!toggleRequest"
+            >
+              <fa-icon [icon]="faList" class="me-1"></fa-icon>
+              Requests
+              <div class="badge btn-new-chat">
+                {{ requests.length }}
+              </div>
+            </button>
 
-                        <button class="btn btn-toggle-requests float-end p-2"
-                        (click)="toggleRequestsList()" *ngIf="toggleRequest">
-                            <fa-icon [icon]="faMessage" class="me-1"></fa-icon>
-                            Conversations
-                        </button>
-                    </div>
-
-                </div>
-
-                <div class="card-body p-0">
-
-                    <app-chat-list *ngIf="!toggleRequest" (selectedChat)="openChat($event)"
-                    [removedChatId]="removedChatId">
-
-                    </app-chat-list>
-                    <app-request-list *ngIf="toggleRequest" [requests]="requests"
-                    ></app-request-list>
-                    
-                </div>
-
-            </div>
-            
+            <button
+              class="btn btn-toggle-requests float-end p-2"
+              (click)="toggleRequestsList()"
+              *ngIf="toggleRequest"
+            >
+              <fa-icon [icon]="faMessage" class="me-1"></fa-icon>
+              Conversations
+            </button>
+          </div>
         </div>
-        <div class="col-lg-8 col-12 p-0">
-            <app-chat [selectedChat]="selectedChat" (removedChatId)="removedChatEvent($event)" 
-            *ngIf="selectedChat._id !== '' || selectedChat._id !== null"></app-chat>
-            <app-presentation-side *ngIf="selectedChat._id === '' || selectedChat._id === null">
-            </app-presentation-side>
+
+        <div class="card-body p-0">
+          <app-chat-list
+            *ngIf="!toggleRequest"
+            (selectedChat)="openChat($event)"
+            [removedChatId]="removedChatId"
+          >
+          </app-chat-list>
+          <app-request-list
+            *ngIf="toggleRequest"
+            [requests]="requests"
+          ></app-request-list>
         </div>
+      </div>
     </div>
+    <div class="col-lg-8 col-12 p-0">
+      <app-chat
+        [selectedChat]="selectedChat"
+        (removedChatId)="removedChatEvent($event)"
+        *ngIf="selectedChat._id !== '' || selectedChat._id !== null"
+      ></app-chat>
+      <app-presentation-side
+        *ngIf="selectedChat._id === '' || selectedChat._id === null"
+      >
+      </app-presentation-side>
+    </div>
+  </div>
 </div>
 
 <div class="container-fluid mobile-view d-none">
-    <div class="row">
-        <div class="col-12 p-0">
-            <div class="card border-white bg-light panel h-100">
+  <div class="row">
+    <div class="col-12 p-0">
+      <div class="card border-white bg-light panel h-100">
+        <!-- app invite menu -->
+        <div class="card-header p-4">
+          <div class="invite-menu">
+            <button
+              class="btn btn-new-chat p-2"
+              data-bs-toggle="modal"
+              data-bs-target="#inviteModal"
+              (click)="setInviteType()"
+            >
+              <fa-icon [icon]="faPlus" class="me-1"></fa-icon>
+              New conversation
+            </button>
+            <button
+              class="btn btn-toggle-requests float-end p-2"
+              (click)="toggleRequestsList()"
+              *ngIf="!toggleRequest"
+            >
+              <fa-icon [icon]="faList" class="me-1"></fa-icon>
+              Requests
+              <div class="badge btn-new-chat">
+                {{ requests.length }}
+              </div>
+            </button>
 
-                <!-- app invite menu -->
-                <div class="card-header p-4">
-                    <div class="invite-menu">
-                        <button class="btn btn-new-chat p-2"
-                        data-bs-toggle="modal" data-bs-target="#inviteModal"
-                        (click)="setInviteType()">
-                            <fa-icon [icon]="faPlus" class="me-1"></fa-icon>
-                            New conversation
-                        </button>
-                        <button class="btn btn-toggle-requests float-end p-2"
-                        (click)="toggleRequestsList()" *ngIf="!toggleRequest">
-                            <fa-icon [icon]="faList" class="me-1"></fa-icon>
-                            Requests
-                            <div class="badge btn-new-chat">
-                                {{requests.length}}
-                            </div>
-                        </button>
-
-                        <button class="btn btn-toggle-requests float-end p-2"
-                        (click)="toggleRequestsList()" *ngIf="toggleRequest">
-                            <fa-icon [icon]="faMessage" class="me-1"></fa-icon>
-                            Conversations
-                        </button>
-                    </div>
-
-                </div>
-
-                <div class="card-body p-0">
-
-                    <app-chat-list *ngIf="!toggleRequest" (selectedChat)="openChat($event)"
-                    [removedChatId]="removedChatId">
-
-                    </app-chat-list>
-                    <app-request-list *ngIf="toggleRequest" [requests]="requests"
-                    ></app-request-list>
-                    
-                </div>
-
-            </div>
-            
+            <button
+              class="btn btn-toggle-requests float-end p-2"
+              (click)="toggleRequestsList()"
+              *ngIf="toggleRequest"
+            >
+              <fa-icon [icon]="faMessage" class="me-1"></fa-icon>
+              Conversations
+            </button>
+          </div>
         </div>
-        <div class="col-lg-8 col-12 p-0">
-          <app-chat [selectedChat]="selectedChat" (removedChatId)="removedChatEvent($event)" 
-          *ngIf="selectedChat._id !== '' || selectedChat._id !== null"></app-chat>
 
-            <app-presentation-side *ngIf="selectedChat._id === '' || selectedChat._id === null">
-            </app-presentation-side>
-        </div>
-    </div>
-</div>
-
-
-<div class="bottom-menu">
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <ul class="navbar-nav navbar-bottom">
-                <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="modal" data-bs-target="#chatListModal">
-                    <fa-icon [icon]="faMessage" class="me-1"></fa-icon>
-                    Chats
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="modal" data-bs-target="#requestListModal">
-                    <fa-icon [icon]="faList" class="me-1"></fa-icon>
-                    Requests
-                    <div class="badge btn-new-chat" *ngIf="requests.length > 0">{{requests.length}}</div>
-                  </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/settings']">
-                      <fa-icon [icon]="faUser" class="me-1"></fa-icon>
-                      Account settings
-                    </a>
-                </li>
-              </ul>
-        </div>
-      </nav>
-</div>
-
-
-
-<!-- Chat list modal -->
-<div class="modal fade" id="chatListModal" tabindex="-1" aria-labelledby="chatListModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="chatListModal">
-            Chats
-        </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-            <app-chat-list (selectedChat)="openChat($event)"
-            [removedChatId]="removedChatId">
-            </app-chat-list>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <div class="card-body p-0">
+          <app-chat-list
+            *ngIf="!toggleRequest"
+            (selectedChat)="openChat($event)"
+            [removedChatId]="removedChatId"
+          >
+          </app-chat-list>
+          <app-request-list
+            *ngIf="toggleRequest"
+            [requests]="requests"
+          ></app-request-list>
         </div>
       </div>
     </div>
+    <div class="col-lg-8 col-12 p-0">
+      <app-chat
+        [selectedChat]="selectedChat"
+        (removedChatId)="removedChatEvent($event)"
+        *ngIf="selectedChat._id !== '' || selectedChat._id !== null"
+      ></app-chat>
+
+      <app-presentation-side
+        *ngIf="selectedChat._id === '' || selectedChat._id === null"
+      >
+      </app-presentation-side>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-menu">
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <ul class="navbar-nav navbar-bottom">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            data-bs-toggle="modal"
+            data-bs-target="#chatListModal"
+          >
+            <fa-icon [icon]="faMessage" class="me-1"></fa-icon>
+            Chats
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            data-bs-toggle="modal"
+            data-bs-target="#requestListModal"
+          >
+            <fa-icon [icon]="faList" class="me-1"></fa-icon>
+            Requests
+            <div class="badge btn-new-chat" *ngIf="requests.length > 0">
+              {{ requests.length }}
+            </div>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/settings']">
+            <fa-icon [icon]="faUser" class="me-1"></fa-icon>
+            Account settings
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<!-- Chat list modal -->
+<div
+  class="modal fade"
+  id="chatListModal"
+  tabindex="-1"
+  aria-labelledby="chatListModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="chatListModal">Chats</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        <app-chat-list
+          (selectedChat)="openChat($event)"
+          [removedChatId]="removedChatId"
+        >
+        </app-chat-list>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- request list modal -->
-<div class="modal fade" id="requestListModal" tabindex="-1" aria-labelledby="requestListModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="requestListModal">
-            Requests
-        </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-            <app-request-list
-            (updatedRequestList)="refreshRequestList($event)"
-            [requests]="requests"
-            ></app-request-list>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        </div>
+<div
+  class="modal fade"
+  id="requestListModal"
+  tabindex="-1"
+  aria-labelledby="requestListModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="requestListModal">Requests</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        <app-request-list
+          (updatedRequestList)="refreshRequestList($event)"
+          [requests]="requests"
+        ></app-request-list>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
       </div>
     </div>
+  </div>
 </div>
 
-
 <!-- Invite modal -->
-<div class="modal fade" id="inviteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            New conversation
-        </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-            <app-invite-modal-body [inviteType]="inviteType"></app-invite-modal-body>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        </div>
+<div
+  class="modal fade"
+  id="inviteModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New conversation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        <app-invite-modal-body
+          [inviteType]="inviteType"
+        ></app-invite-modal-body>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
       </div>
     </div>
+  </div>
 </div>

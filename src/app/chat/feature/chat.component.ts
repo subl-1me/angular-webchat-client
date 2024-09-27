@@ -1,6 +1,14 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter, DoCheck } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  Output,
+  EventEmitter,
+  DoCheck,
+} from '@angular/core';
 
-import { UserCredentials } from 'src/app/shared/models/user-credentials.model';
 import { AuthService } from 'src/app/shared/services/user/auth.service';
 
 import { Message } from 'src/app/shared/models/message.model';
@@ -29,9 +37,12 @@ import { ChatListService } from 'src/app/chat-list/access-data/chat-list.service
 import { Chat } from 'src/app/shared/models/chat.model';
 
 import { User } from 'src/app/shared/models/user.model';
-import * as Moment from 'moment';
-
+import { GLOBAL } from '../../shared/const';
 import { CloudinaryService } from '../data-access/cloudinary.service';
+
+// CHAT SCROLL DOWN EVENTS
+const { SEND_MESSAGE_EVENT, OPEN_CHAT_EVENT } =
+  GLOBAL.CHAT_SCROLL_DOWN_EVENT_CASES;
 
 @Component({
   selector: 'app-chat',
@@ -43,8 +54,8 @@ import { CloudinaryService } from '../data-access/cloudinary.service';
     ChatService,
     CloudinaryService,
     MessageService,
-    UsersTypingService
-  ]
+    UsersTypingService,
+  ],
 })
 export class ChatComponent implements OnInit, OnChanges, DoCheck {
   @Input() selectedChat: Chat;
@@ -63,20 +74,20 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
   faUsers = faUsers;
   faMinus = faMinus;
   faPenToSquare = faPenToSquare;
-  
-  public message:Message;
-  public isUploading:boolean = false;
-  public userAuth:User = {
+
+  public message: Message;
+  public isUploading: boolean = false;
+  public userAuth: User = {
     username: '',
-    email: ''
-  }
-  public inviteType:string = '';
-  public isFirstLoad:boolean = false;
+    email: '',
+  };
+  public inviteType: string = '';
+  public isFirstLoad: boolean = false;
 
-  public usersTyping:User[] = [];
+  public usersTyping: User[] = [];
 
-  public loadedImages:any;
-  public imageServiceMessage:string = '';
+  public loadedImages: any;
+  public imageServiceMessage: string = '';
 
   constructor(
     private authService: AuthService,
@@ -91,86 +102,128 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
     this.loadedImages = [];
     this.selectedChat = { _id: '', participants: [], messages: [] };
     this.userAuth = this.authService.getUser();
-    
-    this.message = { chat: this.selectedChat, content: '', user: this.userAuth._id }
-    this.usersTyping = this.usersTypingService.users;
-   }
 
-  ngOnInit(): void {
+    this.message = {
+      chat: this.selectedChat,
+      content: '',
+      user: this.userAuth._id,
+    };
+    this.usersTyping = this.usersTypingService.users;
   }
+
+  ngOnInit(): void {}
 
   ngDoCheck(): void {
     this.usersTyping = this.usersTypingService.users;
-    this.isFirstLoad = !!localStorage.getItem('isFirstLoad'); 
+    this.isFirstLoad = !!localStorage.getItem('isFirstLoad');
+
+    let chatContainerScrollElem = document.getElementById('container-scroll');
+    if (
+      chatContainerScrollElem &&
+      chatContainerScrollElem.scrollTop > chatContainerScrollElem.scrollHeight
+    ) {
+      console.log('Back to bottom');
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     let chatChanges = changes['selectedChat'];
-    if(chatChanges.currentValue._id === '') return; // empty case
+    if (chatChanges.currentValue._id === '') return; // empty case
 
     this.selectedChat = changes['selectedChat'].currentValue;
-
+    this.setScrollDown(OPEN_CHAT_EVENT);
     // if chat selected changed clear temp loaded images
     this.loadedImages = this.imageService.clear();
   }
 
-  private checkScroll():void{
+  private setScrollDown(when: string): void {
+    let chatContainerScrollElem = document.getElementById('container-scroll');
+    let heightRestant = 0;
+    switch (when) {
+      case SEND_MESSAGE_EVENT:
+        heightRestant = chatContainerScrollElem
+          ? chatContainerScrollElem.scrollHeight -
+            chatContainerScrollElem.scrollTop
+          : 0;
+        if (chatContainerScrollElem) {
+          chatContainerScrollElem.scrollTop =
+            chatContainerScrollElem.scrollHeight;
+        }
+        break;
+      case OPEN_CHAT_EVENT:
+        heightRestant = chatContainerScrollElem
+          ? chatContainerScrollElem.scrollHeight -
+            chatContainerScrollElem.scrollTop
+          : 0;
+        if (chatContainerScrollElem) {
+          chatContainerScrollElem.scrollTop = heightRestant;
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  private checkScroll(): void {
     let chatDiv = document.getElementById('container-scroll');
-    if(!chatDiv) { return }
+    if (!chatDiv) {
+      return;
+    }
     let heightRestant = chatDiv?.scrollHeight - chatDiv?.scrollTop;
     let actualScroll = chatDiv.scrollTop;
     console.log('total scroll', chatDiv.scrollHeight);
     console.log('restant:', heightRestant);
     console.log('actual scroll:', actualScroll);
-    if(actualScroll + heightRestant < chatDiv.scrollHeight){
+    if (actualScroll + heightRestant < chatDiv.scrollHeight) {
       console.log('scrolling up. Showing new messages');
     }
 
-    if(actualScroll + heightRestant === chatDiv.scrollHeight){
+    if (actualScroll + heightRestant === chatDiv.scrollHeight) {
       console.log('Its down. Not scrolling');
     }
-
   }
 
-  public stringAsDate(date:any){
+  public stringAsDate(date: any) {
     return new Date(date);
   }
 
-  public sendMessage():void{
+  public sendMessage(): void {
     this.usersTypingService.resetTyping();
-    if(this.message.content === '' && this.loadedImages.length < 1) return; // Empty case return
+    if (this.message.content === '' && this.loadedImages.length < 1) return; // Empty case return
 
+    this.setScrollDown('SEND_MESSAGE');
     this.message.chat = this.selectedChat._id;
     this.messageService.sendMessage(this.message).subscribe((response) => {
-      if(response.message === 'Chat expired.'){ // Chat was expired, handle first
-        alert(`This chat was expired. All data will be removed.`)
+      if (response.message === 'Chat expired.') {
+        // Chat was expired, handle first
+        alert(`This chat was expired. All data will be removed.`);
         this.closeChat();
         this.chatListService.filterChatById(this.selectedChat._id);
-        return; 
+        return;
         // Pending remove chat from list :pp
       }
 
-      if(response.errorCode || response.status === 'error') return; // Pending to add feedback
+      if (response.errorCode || response.status === 'error') return; // Pending to add feedback
 
       // Send socket with new message
       this.message.content = '';
-      this.socketService.sendNewMessage(response.message);  
-
-      if(this.loadedImages.length === 0) return; // No images attached
-      if(this.isUploading) return; 
+      this.socketService.sendNewMessage(response.message);
+      if (this.loadedImages.length === 0) return; // No images attached
+      if (this.isUploading) return;
       this.uploadAttachedImages(response.message._id);
-    })
-
+    });
   }
 
-  // send "someone is typing" message 
-  public userIsTyping(event:any){
+  // send "someone is typing" message
+  public userIsTyping(event: any) {
     const user = this.authService.getUser();
-    if(!user) { return }
+    if (!user) {
+      return;
+    }
     this.usersTypingService.userTypingEvent(user);
   }
-  
-  private uploadAttachedImages(messageId:string):void{
+
+  private uploadAttachedImages(messageId: string): void {
     let formData = this.imageService.createFormData();
     this.isUploading = true;
     this.setElementsLoadingStatus();
@@ -178,99 +231,107 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
     // append message id to form data to use it on backend
     formData.append('messageId', messageId);
     this.cloudinaryService.uploadImages(formData).subscribe((response) => {
-      if(response.error || response.status === 'error') return; // Pending add feedback
+      if (response.error || response.status === 'error') return; // Pending add feedback
 
       // if files uploaded update message.images
-      this.messageService.insertImages(response.images, messageId).subscribe((response) => {
-        if(response.error || response.status === 'error') return;
+      this.messageService
+        .insertImages(response.images, messageId)
+        .subscribe((response) => {
+          if (response.error || response.status === 'error') return;
 
-        this.isUploading = false;
-        this.loadedImages = this.imageService.clear();
+          this.isUploading = false;
+          this.loadedImages = this.imageService.clear();
 
-        response.message.content = '';
-        this.socketService.sendNewMessage(response.message);
-      })
-
-    })
+          response.message.content = '';
+          this.socketService.sendNewMessage(response.message);
+        });
+    });
   }
 
-  private setElementsLoadingStatus():void{
+  private setElementsLoadingStatus(): void {
     let images = document.getElementsByClassName('img-pre-loaded');
     // Images loading status
-    for(let i = 0; i < images.length; i++){
+    for (let i = 0; i < images.length; i++) {
       let imageElement = <HTMLElement>images[i];
       imageElement.style.opacity = '0.2';
     }
 
     // Xmark icons disabled
     let xMarkIcons = document.getElementsByClassName('xMarkIcon');
-    for(let i = 0; i < xMarkIcons.length; i++){
+    for (let i = 0; i < xMarkIcons.length; i++) {
       let element = <HTMLElement>xMarkIcons[i];
       element.style.opacity = '0.1';
     }
 
     // Add photo disabled while uploading
     let btnAddElement = document.getElementById('btn-add');
-    if(btnAddElement){
+    if (btnAddElement) {
       btnAddElement.style.opacity = '0.3';
       btnAddElement.classList.remove('bg-add');
     }
   }
 
-  public leaveChat():void{
-    if(!this.userAuth._id) { return; }
-    this.chatService.updateParticipants(this.selectedChat._id, this.userAuth._id, 'remove').subscribe((response) => {
-      if(response.error || response.status === 'error') return; // Something went wrong. Pending to add feedback
+  public leaveChat(): void {
+    if (!this.userAuth._id) {
+      return;
+    }
+    this.chatService
+      .updateParticipants(this.selectedChat._id, this.userAuth._id, 'remove')
+      .subscribe((response) => {
+        if (response.error || response.status === 'error') return; // Something went wrong. Pending to add feedback
 
-      this.removedChatId.emit(this.selectedChat._id);
-      localStorage.removeItem('activedChatId');
-      // this.chatListService.loadItems();
+        this.removedChatId.emit(this.selectedChat._id);
+        localStorage.removeItem('teAmoJazmin');
+        // this.chatListService.loadItems();
 
-      const userToRemove = this.authService.getUser();
-      const chatId = this.selectedChat._id;
-      this.selectedChat = { _id: '', participants: [], messages: [] };
-      this.socketService.updateParticipantList(userToRemove, 'remove', chatId);
-    })
+        const userToRemove = this.authService.getUser();
+        const chatId = this.selectedChat._id;
+        this.selectedChat = { _id: '', participants: [], messages: [] };
+        this.socketService.updateParticipantList(
+          userToRemove,
+          'remove',
+          chatId
+        );
+      });
   }
 
-  public closeChat():void{
+  public closeChat(): void {
     this.selectedChat = { _id: '', participants: [], messages: [] };
     this.removedChatId.emit('none');
     localStorage.removeItem('activedChatId');
   }
 
-  public scrollBottom():void{
+  public scrollBottom(): void {
     const chatDiv = document.getElementById('container-scroll');
-    if(chatDiv){
+    if (chatDiv) {
       chatDiv.scrollTop = chatDiv.scrollHeight;
     }
   }
 
-  public setInviteType():void{
+  public setInviteType(): void {
     this.inviteType = 'group';
     localStorage.setItem('inviteType', 'group');
   }
 
-  public attachImage(event:any):void{
+  public attachImage(event: any): void {
     const file = <File>event.target.files[0];
     const handlerResponse = this.imageService.handleImage(file);
-    if(handlerResponse instanceof String){
+    if (handlerResponse instanceof String) {
       this.imageServiceMessage = <string>handlerResponse;
       return;
     }
     this.imageServiceMessage = '';
 
     this.loadedImages = this.imageService.getImages();
-
   }
 
-  public removeImage(image:any):void{
-    if(this.isUploading) return; // case if is already uploading images
+  public removeImage(image: any): void {
+    if (this.isUploading) return; // case if is already uploading images
     this.imageServiceMessage = '';
     this.loadedImages = this.imageService.remove(image);
   }
 
-  public clearChat():void{
+  public clearChat(): void {
     this.selectedChat.messages = [];
   }
 }
