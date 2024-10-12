@@ -301,6 +301,31 @@
       </ng-container>
     </div>
 
+    <div
+      class="new-messages-notif"
+      *ngIf="hasUnreadMessages && unreadMessagesCounter > 0"
+    >
+      <ng-container>
+        <div class="message-notifi">
+          <div class="row text-center">
+            <div class="col-12">
+              <div class="alert bg-light mb-0 border border-bottom-0 rounded-0">
+                <h6 class="small mb-0">
+                  You have {{ unreadMessagesCounter }} unread messages.
+                </h6>
+                <h6
+                  class="small text-decoration-underline"
+                  (click)="setScrollDown(SEE_UNREAD_MESSAGES_EVENT)"
+                >
+                  Click to go below
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
     <div class="message-controls p-3">
       <div
         class="lodaded-images p-3 bg-light mb-3 shadow-sm d-inline-block"

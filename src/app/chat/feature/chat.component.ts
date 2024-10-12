@@ -41,7 +41,7 @@ import { GLOBAL } from '../../shared/const';
 import { CloudinaryService } from '../data-access/cloudinary.service';
 
 // CHAT SCROLL DOWN EVENTS
-const { SEND_MESSAGE_EVENT, OPEN_CHAT_EVENT } =
+const { SEND_MESSAGE_EVENT, OPEN_CHAT_EVENT, SEE_UNREAD_MESSAGES_EVENT } =
   GLOBAL.CHAT_SCROLL_DOWN_EVENT_CASES;
 
 @Component({
@@ -84,7 +84,12 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
   public inviteType: string = '';
   public isFirstLoad: boolean = false;
 
+  public SEE_UNREAD_MESSAGES_EVENT = SEE_UNREAD_MESSAGES_EVENT;
+
   public usersTyping: User[] = [];
+
+  public unreadMessagesCounter: number;
+  public hasUnreadMessages: boolean;
 
   public loadedImages: any;
   public imageServiceMessage: string = '';
@@ -103,6 +108,9 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
     this.selectedChat = { _id: '', participants: [], messages: [] };
     this.userAuth = this.authService.getUser();
 
+    this.unreadMessagesCounter = 0;
+    this.hasUnreadMessages = false;
+
     this.message = {
       chat: this.selectedChat,
       content: '',
@@ -111,19 +119,41 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
     this.usersTyping = this.usersTypingService.users;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.listenMessages();
+  }
+
+  private listenMessages(): void {
+    this.socketService.messageListener.subscribe((message) => {
+      if (message.chat !== this.selectedChat._id) {
+        return;
+      }
+
+      let chatContainerScrollElem = document.getElementById('container-scroll');
+      if (
+        chatContainerScrollElem &&
+        chatContainerScrollElem.scrollTop < chatContainerScrollElem.scrollHeight
+      ) {
+        this.hasUnreadMessages = true;
+        this.unreadMessagesCounter++;
+      }
+    });
+  }
 
   ngDoCheck(): void {
     this.usersTyping = this.usersTypingService.users;
     this.isFirstLoad = !!localStorage.getItem('isFirstLoad');
 
     let chatContainerScrollElem = document.getElementById('container-scroll');
-    if (
-      chatContainerScrollElem &&
-      chatContainerScrollElem.scrollTop > chatContainerScrollElem.scrollHeight
-    ) {
-      console.log('Back to bottom');
-    }
+    console.log(chatContainerScrollElem?.scrollTop);
+    console.log(chatContainerScrollElem?.scrollHeight);
+    // if (
+    //   chatContainerScrollElem &&
+    //   chatContainerScrollElem.scrollTop === chatContainerScrollElem.scrollHeight
+    // ) {
+    //   this.unreadMessagesCounter = 0;
+    //   this.hasUnreadMessages = false;
+    // }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -136,7 +166,7 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
     this.loadedImages = this.imageService.clear();
   }
 
-  private setScrollDown(when: string): void {
+  public setScrollDown(when: string): void {
     let chatContainerScrollElem = document.getElementById('container-scroll');
     let heightRestant = 0;
     switch (when) {
@@ -157,6 +187,14 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
           : 0;
         if (chatContainerScrollElem) {
           chatContainerScrollElem.scrollTop = heightRestant;
+        }
+        break;
+      case SEE_UNREAD_MESSAGES_EVENT:
+        this.unreadMessagesCounter = 0;
+        this.hasUnreadMessages = false;
+        if (chatContainerScrollElem) {
+          chatContainerScrollElem.scrollTop =
+            chatContainerScrollElem.scrollHeight;
         }
         break;
       default:
