@@ -12,7 +12,7 @@ import { User } from '../models/user.model';
   providedIn: 'root',
 })
 export class SocketService {
-  private readonly SOCKET_URL = global.socketConfig.url;
+  private readonly SOCKET_URL = GLOBAL.socketConfig.url;
   public socket = io(this.SOCKET_URL);
 
   public requestListener = new Observable((observer) => {
