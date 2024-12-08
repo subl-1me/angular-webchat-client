@@ -145,8 +145,8 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
     this.isFirstLoad = !!localStorage.getItem('isFirstLoad');
 
     let chatContainerScrollElem = document.getElementById('container-scroll');
-    console.log(chatContainerScrollElem?.scrollTop);
-    console.log(chatContainerScrollElem?.scrollHeight);
+    // console.log(chatContainerScrollElem?.scrollTop);
+    // console.log(chatContainerScrollElem?.scrollHeight);
     // if (
     //   chatContainerScrollElem &&
     //   chatContainerScrollElem.scrollTop === chatContainerScrollElem.scrollHeight
