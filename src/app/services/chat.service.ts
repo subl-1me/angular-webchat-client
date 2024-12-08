@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Chat } from '../models/chat';
 
-import { global } from './const';
+import { GLOBAL } from '../shared/const';
 
 const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
@@ -17,7 +17,7 @@ export class ChatService {
   constructor(private _http: HttpClient) {}
 
   public initChat(request: any): Observable<any> {
-    return this._http.post(global.API_URL + 'chat', request, {
+    return this._http.post(GLOBAL.API_URL + 'chat', request, {
       headers: headers,
     });
   }
@@ -73,14 +73,14 @@ export class ChatService {
   }
 
   private getChat(chatId: string): Observable<any> {
-    return this._http.get(global.API_URL + 'chat/active', {
+    return this._http.get(GLOBAL.API_URL + 'chat/active', {
       headers: headers,
       params: { chatId: chatId },
     });
   }
 
   public removeActiveChat(chatId: string): Observable<any> {
-    return this._http.delete(global.API_URL + 'chat', {
+    return this._http.delete(GLOBAL.API_URL + 'chat', {
       headers: headers,
       params: { chatId: chatId },
     });
@@ -92,14 +92,14 @@ export class ChatService {
     action: string
   ): Observable<any> {
     return this._http.put(
-      global.API_URL + 'chat',
+      GLOBAL.API_URL + 'chat',
       { userId, action },
       { headers: headers, params: { chatId: chatId } }
     );
   }
 
   private getList(userId: string): Observable<any> {
-    return this._http.get(global.API_URL + 'chat', {
+    return this._http.get(GLOBAL.API_URL + 'chat', {
       headers: headers,
       params: { userId: userId },
     });

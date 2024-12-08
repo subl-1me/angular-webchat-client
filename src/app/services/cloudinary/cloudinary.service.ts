@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { global } from '../const';
+import { GLOBAL } from '../../shared/const';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CloudinaryService {
+  constructor(private _http: HttpClient) {}
 
-  constructor(
-    private _http: HttpClient
-  ) { }
-
-  public uploadImages(file:FormData | null, newMessageId:string):Observable<any>{
+  public uploadImages(
+    file: FormData | null,
+    newMessageId: string
+  ): Observable<any> {
     file?.append('newMessageId', newMessageId);
-    return this._http.post(global.API_URL+'cloudinary', file)
+    return this._http.post(GLOBAL.API_URL + 'cloudinary', file);
   }
 }
