@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { global } from '../const';
-import { Observable} from 'rxjs';
+import { GLOBAL } from '../../shared/const';
+import { Observable } from 'rxjs';
 
 // Interfaces
 import { Request } from 'src/app/models/request';
@@ -11,13 +11,12 @@ import { io } from 'socket.io-client';
 import { Chat } from 'src/app/models/chat';
 import { Message } from 'src/app/models/message';
 
-const apiEndPoint = global.socketConfig.url;
+const apiEndPoint = GLOBAL.socketConfig.url;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SocketService {
-
   public socket: any;
   public chatObserver: any;
   public messageObserver: any;
@@ -26,129 +25,126 @@ export class SocketService {
   public participantNotifier: any;
   public messageNotifierObserver: any;
 
-  constructor(
-    private _requestService: RequestService
-  ) { 
+  constructor(private _requestService: RequestService) {
     this.socket = io(apiEndPoint);
     this.updateRequest();
   }
 
-  public loadActiveChat(options:any):void{
+  public loadActiveChat(options: any): void {
     this.socket.emit('load-chat', options);
   }
 
-  public sendMessage(message:any):void{
+  public sendMessage(message: any): void {
     this.socket.emit('send-message', message);
   }
 
-  public updateMessageNotification(message:any):void{
+  public updateMessageNotification(message: any): void {
     this.socket.emit('update-message-notification', message);
   }
 
-  public sendRequest(request:Request):void{
+  public sendRequest(request: Request): void {
     this.socket.emit('send-request', request);
   }
 
-  public cancelRequest(request:Request):void{
+  public cancelRequest(request: Request): void {
     this.socket.emit('update-request', request);
   }
 
-  public acceptRequest(data:any):void{
+  public acceptRequest(data: any): void {
     // this.socket.emit('update-request', data.request);
     this.socket.emit('reload-chat-list', data);
     // this.socket.emit('updated-chat-notifier', data)
   }
 
-  private updateRequest():void{
-    this.socket.on('update-request', (request:Request) => {
+  private updateRequest(): void {
+    this.socket.on('update-request', (request: Request) => {
       this._requestService.updateRequestStatus(request);
-    })
+    });
   }
 
-  public listenNotifier():any{
-    this.socket.on('chat-notifier', (data:any) => {
+  public listenNotifier(): any {
+    this.socket.on('chat-notifier', (data: any) => {
       this.participantNotifier.next(data);
-    })
+    });
 
     return this.notifierListener();
   }
 
-  private notifierListener():any{
+  private notifierListener(): any {
     return new Observable((data) => {
       this.participantNotifier = data;
-    })
+    });
   }
 
-  public reloadChatList():any{
-    this.socket.on('get-list', (data:any) => {
+  public reloadChatList(): any {
+    this.socket.on('get-list', (data: any) => {
       this.chatListObserver.next(data);
-    })
+    });
 
     return this.chatListListener();
   }
 
-  private chatListListener():any{
+  private chatListListener(): any {
     return new Observable((data) => {
       this.chatListObserver = data;
-    })
+    });
   }
 
-  public listenRequest():any{
-    this.socket.on('listen-request', (request:Request) =>{
+  public listenRequest(): any {
+    this.socket.on('listen-request', (request: Request) => {
       this.requestObserver.next(request);
-    })
+    });
 
     return this.requestListener();
   }
 
-  public listenMessageNotification():any{
-    this.socket.on('message-notifier', (message:any) => {
+  public listenMessageNotification(): any {
+    this.socket.on('message-notifier', (message: any) => {
       this.messageNotifierObserver.next(message);
-    })
+    });
 
     return this.messageNotificationListener();
   }
 
-  private messageNotificationListener():Observable<Message>{
-    return new Observable(message => {
+  private messageNotificationListener(): Observable<Message> {
+    return new Observable((message) => {
       this.messageNotifierObserver = message;
-    })
+    });
   }
 
-  public listenMessages():any{
-    this.socket.on('listen-message', (message:any) => {
+  public listenMessages(): any {
+    this.socket.on('listen-message', (message: any) => {
       this.messageObserver.next(message);
-    })
+    });
 
     return this.messageListener();
   }
 
-  public listenChat():any{
-    this.socket.on('listen-chat', (options:any) => {
+  public listenChat(): any {
+    this.socket.on('listen-chat', (options: any) => {
       this.chatObserver.next(options);
-    })
+    });
 
     return this.chatListener();
   }
 
-  private chatListener():Observable<any>{
-    return new Observable(chat => {
+  private chatListener(): Observable<any> {
+    return new Observable((chat) => {
       this.chatObserver = chat;
-    })
+    });
   }
 
-  private messageListener():Observable<any>{
-    return new Observable(message => {
+  private messageListener(): Observable<any> {
+    return new Observable((message) => {
       this.messageObserver = message;
-    })
+    });
   }
 
-  private requestListener():Observable<any>{
-    return new Observable(request => {
+  private requestListener(): Observable<any> {
+    return new Observable((request) => {
       this.requestObserver = request;
-    })
+    });
   }
-
 
   // public recieveMessages():Observable<any>{
   //   console.log('socket inside recieve:', this.socket.id);
@@ -163,6 +159,4 @@ export class SocketService {
   // public sendMessage(message:any):void{
   //   this.socket.emit('sendMessage', message);
   // }
-
-  
-} 
+}
