@@ -1,52 +1,101 @@
-/* Loader skeleton */
-
-.box{
-    width: 100%;
-    height: 200px;
-    border: 1px solid light;
+/* ============================================================
+   Skeleton loader — chat item
+   ============================================================ */
+.box.skeleton {
+  width: 100%;
+  min-height: 120px;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  background-color: #ffffff;
+  border: 1px solid #f0f0f0;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  position: relative;
 }
 
-.line{
-    height: 12px;
-    border-radius: 2%;
+/* Contenedor de la fila */
+.skeleton-row {
+  align-items: center;
+}
+
+/* Línea de texto animada */
+.skeleton-line {
+  height: 12px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(130, 130, 130, 0.15) 25%,
+    rgba(130, 130, 130, 0.28) 50%,
+    rgba(130, 130, 130, 0.15) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+/* Círculos animados (avatar + badge) */
+.skeleton-circle,
+.skeleton-badge {
+  background: linear-gradient(
+    90deg,
+    rgba(130, 130, 130, 0.15) 25%,
+    rgba(130, 130, 130, 0.28) 50%,
+    rgba(130, 130, 130, 0.15) 75%
+  );
+  background-size: 200% 100%;
+  border-radius: 50%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.skeleton-circle {
+  height: 80px;
+  width: 80px;
+  margin: 0 auto;
+}
+
+.skeleton-badge {
+  height: 40px;
+  width: 40px;
+  margin: 0 auto;
+}
+
+/* Keyframes: shimmer real (recorre el gradiente) */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ============================================================
+   Accesibilidad: respetar prefers-reduced-motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-line,
+  .skeleton-circle,
+  .skeleton-badge {
+    animation: none;
     background: rgba(130, 130, 130, 0.2);
-    animation: wave-lines 1s infinite ease-out;
+  }
 }
 
-.circle, .circle-message{
-    background: rgba(130, 130, 130, 0.2);
-    border-radius: 50%;
-    animation: wave-circles 1s infinite ease-out;
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 767.98px) {
+  .box.skeleton {
+    min-height: 96px;
+    padding: 0.35rem;
+  }
+
+  .skeleton-circle {
+    height: 56px;
+    width: 56px;
+  }
+
+  .skeleton-badge {
+    height: 32px;
+    width: 32px;
+  }
 }
-
-.circle{
-    height: 100px;
-    width: 100px;
-}
-
-.circle-message{
-    height: 50px;
-    width: 50px;
-}
-
-@keyframes wave-lines {
-    0% {
-        filter: opacity(50%)
-    }
-     100% {
-        filter: opacity(90%)
-
-    }
-}
-
-@keyframes wave-circles {
-    0% {
-        filter: opacity(30%)
-    }
-     100% {
-        filter: opacity(90%)
-
-    }   
-}
-
-/* */

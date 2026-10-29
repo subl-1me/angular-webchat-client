@@ -1,27 +1,251 @@
-.card{
-    border: 0;
-    height: 90vh;
-    max-height: 90vh;
+/* ============================================================
+   Shell de presentación (tokens del design system)
+   ============================================================ */
+.presentation-shell {
+  --brand-1: #ef4747;
+  --brand-2: #ff7b7b;
+  --brand-3: #7c3aed;
+  --ink: #1f2230;
+  --muted: #6b7280;
+  --surface: #ffffff;
+  --surface-soft: #f7f8fb;
+  --border: #e6e8ef;
+  --focus: rgba(239, 71, 71, 0.18);
+
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(239, 71, 71, 0.05),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 0% 100%,
+      rgba(124, 58, 237, 0.04),
+      transparent 45%
+    ),
+    var(--surface-soft);
+  font-family:
+    "Inter",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: var(--ink);
+  overflow: hidden;
 }
 
-.img-fluid{
-    width: 50% !important;
+.presentation-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 480px;
+  width: 100%;
+  gap: 0.5rem;
+  animation: presentationIn 0.5s ease-out both;
 }
 
-.btn-invite{
-    background-color: #ef4747;
-    border-color: #ef4747;
-    color: white;
+/* ============================================================
+   Ilustración
+   ============================================================ */
+.presentation-illustration-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
 }
 
-.btn-invite:hover{
-    background-color: #cd2626;
-    border-color: #c01b1b;
-    color: white;
-    transition: .3s ease-in-out;
+/* Halo decorativo detrás de la ilustración (puro CSS) */
+.presentation-illustration-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -12% -18%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(239, 71, 71, 0.12) 0%,
+    transparent 65%
+  );
+  z-index: -1;
 }
 
-#chatting-illustration{
-    max-width: 500px;
-    max-height: 500px;
+.presentation-illustration {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 18px 36px rgba(15, 20, 40, 0.12));
+}
+
+/* ============================================================
+   Texto
+   ============================================================ */
+.presentation-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+  margin: 0.5rem 0 0.15rem;
+}
+
+.presentation-subtitle {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 0 0 1.5rem;
+  max-width: 340px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   Botón "Create chat"
+   ============================================================ */
+.presentation-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.4rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 12px 24px -12px rgba(239, 71, 71, 0.65);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.presentation-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 32px -14px rgba(239, 71, 71, 0.75);
+  filter: brightness(1.03);
+}
+
+.presentation-cta:active {
+  transform: translateY(0);
+  box-shadow: 0 8px 16px -10px rgba(239, 71, 71, 0.65);
+}
+
+.presentation-cta:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 4px var(--focus),
+    0 12px 24px -12px rgba(239, 71, 71, 0.65);
+}
+
+/* Pequeña flecha animada al hacer hover */
+.presentation-cta-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.presentation-cta:hover .presentation-cta-arrow {
+  transform: translateX(3px);
+}
+
+/* ============================================================
+   Modal
+   ============================================================ */
+#inviteModal2 .modal-content {
+  border: none;
+  border-radius: 16px;
+  box-shadow:
+    0 1px 2px rgba(15, 20, 40, 0.04),
+    0 20px 40px -20px rgba(15, 20, 40, 0.18);
+}
+
+#inviteModal2 .modal-header,
+#inviteModal2 .modal-footer {
+  border-color: #f0f0f0;
+}
+
+#inviteModal2 .modal-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+/* ============================================================
+   Animaciones
+   ============================================================ */
+@keyframes presentationIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   Accesibilidad
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .presentation-inner {
+    animation: none !important;
+  }
+
+  .presentation-cta,
+  .presentation-cta-arrow {
+    transition: none !important;
+  }
+
+  .presentation-cta:hover,
+  .presentation-cta:hover .presentation-cta-arrow {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 900px) {
+  .presentation-illustration {
+    max-width: 220px;
+  }
+
+  .presentation-title {
+    font-size: 1.3rem;
+  }
+
+  .presentation-subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .presentation-shell {
+    padding: 1.5rem 1rem;
+  }
+
+  .presentation-illustration {
+    max-width: 180px;
+  }
+
+  .presentation-title {
+    font-size: 1.15rem;
+  }
+
+  .presentation-subtitle {
+    font-size: 0.85rem;
+    max-width: 260px;
+  }
+
+  .presentation-cta {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.85rem;
+  }
 }

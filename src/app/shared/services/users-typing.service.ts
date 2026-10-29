@@ -7,21 +7,20 @@ import { User } from '../models/user.model';
 import * as Moment from 'moment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsersTypingService {
+  public users: User[] = [];
+  public myUser: User;
+  public userId: string;
+  private activeChatId: string = localStorage.getItem('activedChatId') || '';
 
-  public users:User[] = [];
-  public myUser:User;
-  public userId:string;
-  private activeChatId:string = localStorage.getItem('activedChatId') || '';
-
-  private typingCooldown:any = null;
-  private cooldownInterval:any;
+  private typingCooldown: any = null;
+  private cooldownInterval: any;
 
   constructor(
     private socketService: SocketService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.myUser = { username: '', email: '' };
     this.userId = this.authService.getUser()._id || '';
@@ -29,64 +28,74 @@ export class UsersTypingService {
     this.userTypingListener();
     this.cooldownInterval = setInterval(() => {
       this.userNotTypingChecker();
-    }, 1000)
-   }
+    }, 1000);
+  }
 
-     /**
+  /**
    * After 6 seconds of not typing, filter this user from usersTyping object to remove 'typing...' message
    */
-  public userNotTypingChecker():void{
-    if(this.typingCooldown === null) { return };
+  public userNotTypingChecker(): void {
+    if (this.typingCooldown === null) {
+      return;
+    }
     let now = Moment();
 
     let diff = this.typingCooldown.diff(now, 'seconds');
-    if(diff <= 0){
+    if (diff <= 0) {
       this.isNotTyping();
       this.typingCooldown = null;
     }
   }
 
-  public resetTyping():void{
+  public resetTyping(): void {
     this.typingCooldown = null;
     this.isNotTyping();
   }
 
-  public userTypingEvent(user:User):void{
+  public userTypingEvent(user: User): void {
     this.myUser = user;
     this.typingCooldown = Moment().add('2', 'seconds');
-    const isUserTyping = this.users.find(user => user._id === this.myUser._id);
-    if(isUserTyping) { return } 
+    const isUserTyping = this.users.find(
+      (user) => user._id === this.myUser._id,
+    );
+    if (isUserTyping) {
+      return;
+    }
     this.activeChatId = localStorage.getItem('activedChatId') || '';
     this.socketService.isTyping(this.activeChatId, true, this.myUser);
   }
 
-  public refreshActiveChatId():void{
+  public refreshActiveChatId(): void {
     this.activeChatId = localStorage.getItem('activedChatId') || '';
   }
 
-
-  public userTypingListener():void{
+  public userTypingListener(): void {
     this.socketService.typingUserListener.subscribe((response) => {
       const { user, chatId, isTyping } = response;
 
       this.activeChatId = localStorage.getItem('activedChatId') || '';
-      if(this.activeChatId !== chatId) { return; } // return if chat is not active
-      if(user._id === this.myUser._id) { return; } // return if i am typing
+      if (this.activeChatId !== chatId) {
+        return;
+      } // return if chat is not active
+      if (user._id === this.myUser._id) {
+        return;
+      } // return if i am typing
 
-      const isUserInList = this.users.find(_user => _user._id === user._id);
-      if(isUserInList && isTyping) { return }
+      const isUserInList = this.users.find((_user) => _user._id === user._id);
+      if (isUserInList && isTyping) {
+        return;
+      }
 
-      if(isTyping){
+      if (isTyping) {
         this.users.push(user);
         return;
       }
 
-      this.users = this.users.filter(_user => _user._id !== user._id);
-
-    })
+      this.users = this.users.filter((_user) => _user._id !== user._id);
+    });
   }
 
-  private isNotTyping():void{
+  private isNotTyping(): void {
     this.socketService.isTyping(this.activeChatId, false, this.myUser);
   }
 }

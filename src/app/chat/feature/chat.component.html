@@ -1,33 +1,40 @@
 <div class="active-chat" *ngIf="selectedChat._id !== ''">
-  <div class="card bg-white border-white">
-    <div class="card-header bg-white p-3" *ngIf="selectedChat._id !== ''">
-      <div class="row header-content">
+  <div class="chat-shell">
+    <!-- ============================================================
+         Header
+         ============================================================ -->
+    <header class="chat-header" *ngIf="selectedChat._id !== ''">
+      <div class="chat-header-left">
+        <!-- Avatar (chats duo) -->
         <div
-          class="col-xl-2 col-lg-2 col-3"
+          class="chat-header-avatar-wrap"
           *ngIf="!selectedChat.isGroup && selectedChat.participants.length > 0"
         >
           <ng-container *ngFor="let user of selectedChat.participants">
             <img
-              src="{{ user.avatar.url }}"
-              id="img-user"
-              class="float-end"
+              [src]="user.avatar.url"
+              class="chat-header-avatar"
+              [alt]="'Avatar of ' + user.username"
               *ngIf="user._id !== userAuth._id"
             />
           </ng-container>
         </div>
-        <div class="col-xl col-lg col mb-auto mt-auto">
-          <h4 class="d-inline" *ngIf="selectedChat.participants.length === 0">
+
+        <!-- Título + typing -->
+        <div class="chat-header-info">
+          <h4 class="chat-title" *ngIf="selectedChat.participants.length === 0">
             Only You
           </h4>
-          <h4 class="fw-bold mb-0 ms-3">
+
+          <h4 class="chat-title" *ngIf="selectedChat.participants.length > 0">
             <ng-container
               *ngFor="
                 let participant of selectedChat.participants;
                 last as last
               "
             >
-              <h4
-                class="d-inline fw-bold"
+              <span
+                class="chat-participant"
                 *ngIf="participant.username !== userAuth.username"
               >
                 <span *ngIf="selectedChat.participants.length === 2 && last">
@@ -37,407 +44,399 @@
                 }}<span *ngIf="selectedChat.participants.length > 2 && !last"
                   >,
                 </span>
-              </h4>
+              </span>
             </ng-container>
           </h4>
-          <!-- <h3 class="fw-bold mb-0 ms-3">
-                        Los baltazar
-                    </h3> -->
-          <ng-container *ngIf="usersTyping.length > 0 && !selectedChat.isGroup">
-            <h6 class="text-muted mb-0 ms-3">
-              <ng-container *ngFor="let user of usersTyping">
-                Typing<span id="dot-1">.</span><span id="dot-2">.</span
-                ><span id="dot-3">.</span>
-              </ng-container>
-            </h6>
-          </ng-container>
-          <!-- <ng-container *ngIf="selectedChat.isGroup">
-                        <h4 class="text-muted mb-0 ms-3 small">
-                            Rename group
-                            <fa-icon [icon]="faPenToSquare" class="ms-1"></fa-icon>
-                        </h4>
-                    </ng-container> -->
-        </div>
-        <div class="col-xl-2 col-lg-2 col-2 text-center mt-auto mb-auto">
-          <div class="controls float-end">
-            <div class="dropdown">
-              <button
-                class="btn"
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <fa-icon [icon]="faEllipsisV" class="h1"></fa-icon>
-              </button>
-              <ul class="dropdown-menu">
-                <li class="dropdown-li">
-                  <a
-                    class="dropdown-item"
-                    data-bs-toggle="modal"
-                    data-bs-target="#inviteModalChat"
-                    (click)="setInviteType()"
-                  >
-                    Invite user
-                  </a>
-                </li>
-                <li class="dropdown-li">
-                  <a class="dropdown-item" (click)="closeChat()"> Close </a>
-                </li>
-                <div class="dropdown-divider"></div>
-                <li class="dropdown-li">
-                  <a class="dropdown-item fw-bold" (click)="leaveChat()">
-                    Leave
-                  </a>
-                </li>
-              </ul>
-            </div>
+
+          <div
+            class="typing-indicator"
+            *ngIf="usersTyping.length > 0 && !selectedChat.isGroup"
+          >
+            <ng-container *ngFor="let user of usersTyping">
+              Typing<span class="dot dot-1">.</span
+              ><span class="dot dot-2">.</span><span class="dot dot-3">.</span>
+            </ng-container>
           </div>
         </div>
       </div>
-    </div>
-    <div class="card-body" id="container-scroll">
+
+      <!-- Menú de opciones -->
+      <div class="chat-header-actions">
+        <div class="dropdown">
+          <button
+            type="button"
+            class="chat-options-btn"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            aria-label="Chat options"
+          >
+            <fa-icon [icon]="faEllipsisV" aria-hidden="true"></fa-icon>
+          </button>
+
+          <ul class="dropdown-menu dropdown-menu-end chat-dropdown-menu">
+            <li>
+              <a
+                class="dropdown-item"
+                href="#"
+                role="button"
+                data-bs-toggle="modal"
+                data-bs-target="#inviteModalChat"
+                (click)="setInviteType()"
+              >
+                Invite user
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="#"
+                role="button"
+                (click)="closeChat()"
+              >
+                Close
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item text-danger fw-bold"
+                href="#"
+                role="button"
+                (click)="leaveChat()"
+              >
+                Leave
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <div class="chat-body" id="container-scroll">
       <div class="messages-container">
-        <div class="row">
-          <ng-container
-            *ngFor="
-              let message of selectedChat.messages;
-              last as last;
-              index as i;
-              first as first
+        <ng-container
+          *ngFor="
+            let message of selectedChat.messages;
+            last as last;
+            index as i;
+            first as first
+          "
+        >
+          <div
+            class="message-row message-self"
+            *ngIf="message.user.username === userAuth.username"
+          >
+            <div class="message-content">
+              <span
+                class="message-sender-label"
+                *ngIf="
+                  !first &&
+                  selectedChat.messages[i - 1].user._id !== userAuth._id &&
+                  selectedChat.isGroup
+                "
+              >
+                You
+              </span>
+              <div
+                class="message-bubble bubble-self"
+                *ngIf="message.content !== ''"
+              >
+                {{ message.content }}
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="message-row message-self"
+            *ngIf="
+              message.images && message.user.username === userAuth.username
             "
           >
-            <div
-              class="col-12 my-message mb-2"
-              *ngIf="message.user.username === userAuth.username"
-            >
-              <div class="content float-end">
-                <h6
-                  class="fw-bold"
-                  *ngIf="
-                    !first &&
-                    selectedChat.messages[i - 1].user._id !== userAuth._id &&
-                    selectedChat.isGroup
-                  "
-                >
-                  You:
-                </h6>
-                <div
-                  class="message-bubble p-3 bg-message-self rounded d-inline-block float-end"
-                  *ngIf="message.content !== ''"
-                >
-                  <h6 class="d-inline">
-                    {{ message.content }}
-                  </h6>
-                </div>
-              </div>
+            <div class="message-content message-images">
+              <ng-container *ngFor="let image of message.images">
+                <img
+                  [src]="image.url"
+                  class="attached-image"
+                  alt="Image attachment"
+                />
+              </ng-container>
             </div>
+          </div>
 
-            <!-- <ng-container *ngFor="let image of message.images">
-                            <div class="col-12">
-                                <img src="{{image.url}}" class=>
-                            </div>
-                        </ng-container> -->
-
-            <div
-              class="col-12 mb-2 my-message"
-              *ngIf="
-                message.images && message.user.username === userAuth.username
-              "
-            >
-              <div class="content float-end">
-                <ng-container *ngFor="let image of message.images">
-                  <img
-                    src="{{ image.url }}"
-                    class="float-end rounded shadow m-2"
-                    id="attached-image"
-                  />
-                </ng-container>
-              </div>
-            </div>
-
-            <div
-              class="col-12 my-message mb-2"
-              *ngIf="
-                message.user.username !== userAuth.username &&
-                !message.isNotification
-              "
-            >
-              <div class="content d-inline-block">
-                <div class="row">
-                  <div
-                    class="col-12 mb-2 mt-5"
-                    *ngIf="
-                      !first &&
-                      selectedChat.messages[i - 1].user._id !==
-                        message.user._id &&
-                      selectedChat.isGroup
-                    "
-                  >
-                    <img
-                      src="{{ message.user.avatar.url }}"
-                      id="img-user-msg"
-                    />
-                    <h6 class="fw-bold d-inline ms-2">
-                      {{ message.user.username }}:
-                    </h6>
-                  </div>
-
-                  <!-- if first message -->
-                  <div
-                    class="col-12 mb-2 mt-2"
-                    *ngIf="first && selectedChat.isGroup"
-                  >
-                    <img
-                      src="{{ message.user.avatar.url }}"
-                      id="img-user-msg"
-                    />
-                    <h6 class="fw-bold d-inline ms-2">
-                      {{ message.user.username }}:
-                    </h6>
-                  </div>
-
-                  <div class="col-12" *ngIf="message.content !== ''">
-                    <div
-                      class="message-bubble p-3 bg-message-friend rounded d-inline-block"
-                    >
-                      <h6 class="d-inline">
-                        {{ message.content }}
-                        {{ last && !isFirstLoad ? scrollBottom() : "" }}
-                      </h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="col-12 mb-2 my-message"
-              *ngIf="
-                message.images && message.user.username !== userAuth.username
-              "
-            >
-              <div class="content">
-                <ng-container *ngFor="let image of message.images">
-                  <img
-                    src="{{ image.url }}"
-                    class="rounded shadow m-2"
-                    id="attached-image"
-                  />
-                  {{ last ? scrollBottom() : "" }}
-                </ng-container>
-              </div>
-            </div>
-
-            <!-- user joined notification -->
-            <div
-              class="col-12 mb-2 user-joined"
-              *ngIf="
-                message.isNotification &&
-                message.notificationType === 'user-joined'
-              "
-            >
+          <div
+            class="message-row message-other"
+            *ngIf="
+              message.user.username !== userAuth.username &&
+              !message.isNotification
+            "
+          >
+            <div class="message-content">
               <div
-                class="text-center me-auto ms-auto p-3 bg-light shadow-sm rounded col-lg-3 col-6"
+                class="sender-row"
+                *ngIf="
+                  !first &&
+                  selectedChat.messages[i - 1].user._id !== message.user._id &&
+                  selectedChat.isGroup
+                "
               >
                 <img
-                  src="{{ message.user.avatar.url }}"
-                  id="user-notification"
-                  class="rounded-circle shadow"
+                  [src]="message.user.avatar.url"
+                  class="msg-avatar"
+                  [alt]="'Avatar of ' + message.user.username"
                 />
-                <h6 class="mb-0">
-                  <b>{{ message.user.username }}</b> has joined.
-                </h6>
-                <h6 class="small text-muted">
-                  {{ stringAsDate(message.createdAt) | date : "shortTime" }}
-                </h6>
+                <span class="message-sender-name">{{
+                  message.user.username
+                }}</span>
               </div>
-            </div>
 
-            <!-- user joined notification -->
-            <div
-              class="col-12 me-auto ms-auto mb-2 user-left"
-              *ngIf="
-                message.isNotification &&
-                message.notificationType === 'user-left'
-              "
-            >
-              <div
-                class="text-center me-auto ms-auto p-3 bg-light shadow-sm rounded col-lg-3 col-6"
-              >
+              <div class="sender-row" *ngIf="first && selectedChat.isGroup">
                 <img
-                  src="{{ message.user.avatar.url }}"
-                  id="user-notification"
-                  class="rounded-circle shadow"
+                  [src]="message.user.avatar.url"
+                  class="msg-avatar"
+                  [alt]="'Avatar of ' + message.user.username"
                 />
-                <h6 class="mb-0">
-                  <b>{{ message.user.username }}</b> has left.
-                </h6>
-                <h6 class="small text-muted">
-                  {{ stringAsDate(message.createdAt) | date : "shortTime" }}
-                </h6>
+                <span class="message-sender-name">{{
+                  message.user.username
+                }}</span>
+              </div>
+
+              <div
+                class="message-bubble bubble-other"
+                *ngIf="message.content !== ''"
+              >
+                {{ message.content }}
               </div>
             </div>
-          </ng-container>
-        </div>
+          </div>
+
+          <div
+            class="message-row message-other"
+            *ngIf="
+              message.images && message.user.username !== userAuth.username
+            "
+          >
+            <div class="message-content message-images">
+              <ng-container *ngFor="let image of message.images">
+                <img
+                  [src]="image.url"
+                  class="attached-image"
+                  alt="Image attachment"
+                />
+              </ng-container>
+            </div>
+          </div>
+
+          <!-- Notificación: joined -->
+          <div
+            class="message-notification"
+            *ngIf="
+              message.isNotification &&
+              message.notificationType === 'user-joined'
+            "
+          >
+            <div class="notification-card">
+              <img
+                [src]="message.user.avatar.url"
+                class="notification-avatar"
+                [alt]="'Avatar of ' + message.user.username"
+              />
+              <span class="notification-text">
+                <b>{{ message.user.username }}</b> has joined.
+              </span>
+              <span class="notification-time">
+                {{ stringAsDate(message.createdAt) | date: "shortTime" }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Notificación: left -->
+          <div
+            class="message-notification"
+            *ngIf="
+              message.isNotification && message.notificationType === 'user-left'
+            "
+          >
+            <div class="notification-card">
+              <img
+                [src]="message.user.avatar.url"
+                class="notification-avatar"
+                [alt]="'Avatar of ' + message.user.username"
+              />
+              <span class="notification-text">
+                <b>{{ message.user.username }}</b> has left.
+              </span>
+              <span class="notification-time">
+                {{ stringAsDate(message.createdAt) | date: "shortTime" }}
+              </span>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </div>
 
-    <div class="users-typing p-3" *ngIf="selectedChat.isGroup">
+    <!-- ============================================================
+         Usuarios escribiendo (grupo)
+         ============================================================ -->
+    <div class="users-typing" *ngIf="selectedChat.isGroup">
       <ng-container *ngFor="let user of usersTyping">
-        <div class="user-typing mb-1">
-          <div class="row">
-            <div class="col-12">
-              <img
-                src="{{ user.avatar.url }}"
-                id="user-typing-avatar"
-                class="shadow-sm rounded-circle me-2"
-              />
-              <h6 class="d-inline text-muted">{{ user.username }} is typing</h6>
-              <span id="dot-1">.</span><span id="dot-2">.</span
-              ><span id="dot-3">.</span>
-            </div>
-          </div>
+        <div class="user-typing">
+          <img
+            [src]="user.avatar.url"
+            class="typing-avatar"
+            [alt]="'Avatar of ' + user.username"
+          />
+          <span class="typing-name">{{ user.username }} is typing</span>
+          <span class="dot dot-1">.</span><span class="dot dot-2">.</span
+          ><span class="dot dot-3">.</span>
         </div>
       </ng-container>
     </div>
 
     <div
-      class="new-messages-notif"
+      class="unread-banner-wrap"
       *ngIf="hasUnreadMessages && unreadMessagesCounter > 0"
+      role="status"
     >
-      <ng-container>
-        <div class="message-notifi">
-          <div class="row text-center">
-            <div class="col-12">
-              <div class="alert bg-light mb-0 border border-bottom-0 rounded-0">
-                <h6 class="small mb-0">
-                  You have {{ unreadMessagesCounter }} unread messages.
-                </h6>
-                <h6
-                  class="small text-decoration-underline"
-                  (click)="setScrollDown(SEE_UNREAD_MESSAGES_EVENT)"
-                >
-                  Click to go below
-                </h6>
-              </div>
-            </div>
-          </div>
-        </div>
-      </ng-container>
+      <div class="unread-banner">
+        <span class="unread-text">
+          You have {{ unreadMessagesCounter }} unread messages.
+        </span>
+        <button
+          class="unread-link"
+          type="button"
+          (click)="setScrollDown(SEE_UNREAD_MESSAGES_EVENT)"
+        >
+          Go to latest
+        </button>
+      </div>
     </div>
 
-    <div class="message-controls p-3">
-      <div
-        class="lodaded-images p-3 bg-light mb-3 shadow-sm d-inline-block"
-        *ngIf="loadedImages.length > 0"
-      >
+    <!-- ============================================================
+         Controles de mensaje
+         ============================================================ -->
+    <footer class="chat-composer">
+      <!-- Previews de imágenes cargadas -->
+      <div class="composer-previews" *ngIf="loadedImages.length > 0">
         <ng-container *ngFor="let image of loadedImages">
-          <div
-            class="spinner-border spinner-border-sm"
-            role="status"
-            *ngIf="isUploading"
-          >
-            <span class="visually-hidden">Loading...</span>
+          <div class="preloaded-image-wrapper">
+            <img [src]="image" class="preloaded-image" alt="Preloaded image" />
+            <button
+              type="button"
+              class="remove-img-btn"
+              [attr.aria-label]="'Remove image'"
+              (click)="removeImage(image)"
+            >
+              <fa-icon [icon]="faXmark" aria-hidden="true"></fa-icon>
+            </button>
           </div>
-          <div
-            class="badge bg-light shadow rounded-circle bg-add"
-            id="remove-img-icon"
-            (click)="removeImage(image)"
-          >
-            <fa-icon [icon]="faXmark" class="h6 xMarkIcon"></fa-icon>
-          </div>
-          <img
-            src="{{ image }}"
-            class="img-pre-loaded rounded shadow me-1"
-            id="image-attached"
-          />
         </ng-container>
 
-        <div class="option d-inline-block">
-          <span class="input-image p-0 d-inline-block" id="basic-addon2">
-            <label class="custom-file-upload">
-              <input
-                type="file"
-                (change)="attachImage($event)"
-                [disabled]="isUploading"
-              />
-              <div
-                class="badge bg-white bg-add shadow p-3 rounded-circle ms-2 me-2"
-                id="btn-add"
-              >
-                <fa-icon [icon]="faPlus" class="text-dark"></fa-icon>
-              </div>
-            </label>
-          </span>
-        </div>
-      </div>
-
-      <small class="text-danger ms-4" *ngIf="imageServiceMessage !== ''">
-        {{ imageServiceMessage }}
-      </small>
-
-      <div class="options pe-4 ps-4 pb-2" *ngIf="loadedImages.length === 0">
-        <span class="input-image p-0 d-inline-block" id="basic-addon2">
-          <label class="custom-file-upload">
-            <input type="file" (change)="attachImage($event)" />
-            <div class="badge bg-add-photo p-2 rounded-circle">
-              <fa-icon [icon]="faImage"></fa-icon>
-            </div>
-          </label>
+        <span class="composer-upload-spinner" role="status" *ngIf="isUploading">
+          <span class="spinner"></span>
+          <span class="visually-hidden">Uploading...</span>
         </span>
-        <small class="text-muted ms-1" id="add-img-span">Adjunt an image</small>
+
+        <label class="composer-file-btn" aria-label="Add another image">
+          <input
+            type="file"
+            (change)="attachImage($event)"
+            [disabled]="isUploading"
+            aria-label="Add another image"
+          />
+          <fa-icon [icon]="faPlus" aria-hidden="true"></fa-icon>
+        </label>
       </div>
 
-      <!-- Message input -->
-      <div class="row">
-        <div class="col-9 col-lg-10 input-col mt-auto mb-auto">
-          <form sendMessageForm="ngForm" (ngSubmit)="sendMessage()">
-            <input
-              type="text"
-              class="form-control p-3"
-              id="msg-input"
-              placeholder="Type here!"
-              name="message"
-              [(ngModel)]="message.content"
-              (keydown)="userIsTyping($event)"
-            />
-          </form>
-        </div>
+      <span
+        class="composer-error"
+        *ngIf="imageServiceMessage !== ''"
+        role="alert"
+      >
+        {{ imageServiceMessage }}
+      </span>
 
-        <div class="col-3 col-lg-2 btn-send-col text-center mt-auto mb-auto">
-          <!-- <button type="button" class="btn btn-send rounded-circle p-3"
-                     (click)="sendMessage()">
-                        <fa-icon [icon]="faPaperPlane"></fa-icon>
-                    </button> -->
-          <button
-            type="submit"
-            class="btn btn-send rounded p-3 w-100"
-            (click)="sendMessage()"
-          >
-            Send
-            <fa-icon [icon]="faPaperPlane" class="m-0 p-0"></fa-icon>
-          </button>
-
-          <div class="badge badge-paperplane btn-send rounded p-3">
-            <fa-icon [icon]="faPaperPlane" class="h5 m-0 p-0"></fa-icon>
-          </div>
-        </div>
+      <!-- Botón adjuntar (cuando no hay imágenes) -->
+      <div class="composer-attach" *ngIf="loadedImages.length === 0">
+        <label class="composer-file-btn" aria-label="Attach an image">
+          <input
+            type="file"
+            (change)="attachImage($event)"
+            aria-label="Attach an image"
+          />
+          <fa-icon [icon]="faImage" aria-hidden="true"></fa-icon>
+        </label>
+        <small class="composer-attach-label">Attach an image</small>
       </div>
-    </div>
+
+      <!-- Input + Send -->
+      <div class="composer-row">
+        <form
+          sendMessageForm="ngForm"
+          (ngSubmit)="sendMessage()"
+          class="composer-form"
+        >
+          <label for="msg-input" class="visually-hidden">Message</label>
+          <input
+            type="text"
+            class="msg-input"
+            id="msg-input"
+            placeholder="Type your message..."
+            name="message"
+            [disabled]="isSendingMessage"
+            [(ngModel)]="message.content"
+            (keydown)="userIsTyping($event)"
+            autocomplete="off"
+            aria-label="Type your message"
+          />
+        </form>
+
+        <button
+          type="button"
+          class="btn-send"
+          (click)="sendMessage()"
+          [disabled]="isSendingMessage"
+          aria-label="Send message"
+        >
+          <span class="btn-send-label" *ngIf="!isSendingMessage">
+            Sending...
+            <span class="composer-sending-msg-spinner" role="status">
+              <span class="spinner"></span>
+              <span class="visually-hidden">Sending...</span>
+            </span>
+          </span>
+          <fa-icon
+            [icon]="faPaperPlane"
+            *ngIf="isSendingMessage"
+            aria-hidden="true"
+          ></fa-icon>
+        </button>
+
+        <button
+          type="button"
+          class="btn-send-mini"
+          (click)="sendMessage()"
+          aria-label="Send message"
+        >
+          <fa-icon [icon]="faPaperPlane" aria-hidden="true"></fa-icon>
+        </button>
+      </div>
+    </footer>
   </div>
 
-  <!-- Invite modal -->
+  <!-- ============================================================
+       Modal: invitar
+       ============================================================ -->
   <div
     class="modal fade"
     id="inviteModalChat"
     tabindex="-1"
-    aria-labelledby="exampleModalLabel"
+    aria-labelledby="inviteModalChatLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Invite a friend</h5>
+          <h5 class="modal-title" id="inviteModalChatLabel">Invite a friend</h5>
           <button
             type="button"
             class="btn-close"
@@ -449,8 +448,7 @@
           <app-invite-modal-body
             [inviteType]="inviteType"
             [chatId]="selectedChat._id"
-          >
-          </app-invite-modal-body>
+          ></app-invite-modal-body>
         </div>
         <div class="modal-footer">
           <button
@@ -465,18 +463,20 @@
     </div>
   </div>
 
-  <!-- Settings modal -->
+  <!-- ============================================================
+       Modal: ajustes del chat
+       ============================================================ -->
   <div
     class="modal fade"
     id="chatSettingsModal"
     tabindex="-1"
-    aria-labelledby="chatSettingsModal"
+    aria-labelledby="chatSettingsModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="chatSettingsModal">Chat settings</h5>
+          <h5 class="modal-title" id="chatSettingsModalLabel">Chat settings</h5>
           <button
             type="button"
             class="btn-close"
@@ -486,14 +486,18 @@
         </div>
         <div class="modal-body">
           <h6>Users:</h6>
-          <div class="list-group user-list">
-            <div class="list-group-item border-light">
-              <small class="text-muted">You</small>
+          <div class="chat-settings-users">
+            <div class="chat-settings-user">
+              <small class="chat-settings-you">You</small>
             </div>
             <ng-container *ngFor="let user of selectedChat.participants">
-              <div class="list-group-item border-light">
-                <img src="{{ user.avatar.url }}" class="img-user-icon me-2" />
-                <small class="fw-bold">{{ user.username }}</small>
+              <div class="chat-settings-user">
+                <img
+                  [src]="user.avatar.url"
+                  class="chat-settings-avatar"
+                  [alt]="'Avatar of ' + user.username"
+                />
+                <small class="chat-settings-name">{{ user.username }}</small>
               </div>
             </ng-container>
           </div>
@@ -514,26 +518,26 @@
     </div>
   </div>
 
+  <!-- ============================================================
+       Welcome container (bloque lógico inalcanzable actualmente)
+       ============================================================ -->
   <div class="welcome-container" *ngIf="selectedChat._id === ''">
-    <div class="card border-white">
-      <div class="card-body text-center">
-        <div class="content">
-          <img
-            src="../../../assets/images/conversation-image.svg"
-            class="img-fluid w-50"
-          />
-          <h4>Select a chat from your list</h4>
-          <h4>or</h4>
-          <button
-            type="button"
-            class="btn bg-message-self p-3"
-            data-bs-toggle="modal"
-            data-bs-target="#inviteModal"
-          >
-            <h4 class="mb-0">Create new conversation</h4>
-          </button>
-        </div>
-      </div>
+    <div class="welcome-card">
+      <img
+        src="../../../assets/images/conversation-image.svg"
+        class="welcome-illustration"
+        alt="Start a conversation"
+      />
+      <h4>Select a chat from your list</h4>
+      <p>or</p>
+      <button
+        type="button"
+        class="create-chat-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#inviteModal"
+      >
+        Create new conversation
+      </button>
     </div>
   </div>
 </div>

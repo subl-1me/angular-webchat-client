@@ -1,37 +1,311 @@
-.navbar{
-    background-color: #ef4747 !important;
+/* ============================================================
+   App Navbar
+   ============================================================ */
+.app-navbar {
+  --brand-1: #ef4747;
+  --brand-2: #ff7b7b;
+  --brand-3: #7c3aed;
+  --ink: #1f2230;
+  --muted: #6b7280;
+  --surface: #ffffff;
+  --surface-soft: #f7f8fb;
+  --border: #e6e8ef;
+  --focus: rgba(239, 71, 71, 0.18);
+
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  width: 100%;
+  font-family:
+    "Inter",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: #ffffff;
+  background:
+    radial-gradient(
+      circle at 10% 20%,
+      rgba(255, 255, 255, 0.12),
+      transparent 50%
+    ),
+    linear-gradient(135deg, var(--brand-1) 0%, var(--brand-2) 60%, #ff9494 100%);
+  box-shadow: 0 8px 24px -12px rgba(239, 71, 71, 0.45);
 }
 
-.logout-item{
-    text-decoration: none;
+.app-navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem 1.25rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   Brand
+   ============================================================ */
+.app-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.3px;
+  transition:
+    opacity 0.18s ease,
+    transform 0.12s ease;
+}
+
+.app-brand:hover {
+  color: #ffffff;
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.app-brand-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: #ffffff;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.app-brand-mark::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, var(--brand-1), var(--brand-3));
+}
+
+.app-brand-text {
+  color: #ffffff;
+}
+
+/* ============================================================
+   Zona derecha
+   ============================================================ */
+.app-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Logout rápido (solo móvil) */
+.app-logout-quick {
+  display: none;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.82rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition:
+    background-color 0.18s ease,
+    transform 0.12s ease;
+}
+
+.app-logout-quick:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   User trigger + avatar + dropdown
+   ============================================================ */
+.app-user {
+  position: relative;
+}
+
+.app-user-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.25rem 0.75rem 0.25rem 0.25rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.12s ease;
+}
+
+.app-user-trigger:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.app-user-trigger:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+.app-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffffff;
+  background-color: #ffffff;
+  transition: transform 0.18s ease;
+}
+
+.app-user-trigger:hover .app-user-avatar {
+  transform: scale(1.06);
+}
+
+.app-user-name {
+  color: #ffffff;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-user-chevron {
+  font-size: 0.7rem;
+  opacity: 0.9;
+  line-height: 1;
+}
+
+/* ============================================================
+   Dropdown menu (el que muestra Bootstrap)
+   ============================================================ */
+.user-dropdown {
+  border: none;
+  border-radius: 14px;
+  box-shadow:
+    0 1px 2px rgba(15, 20, 40, 0.04),
+    0 20px 40px -20px rgba(15, 20, 40, 0.18);
+  padding: 0.4rem;
+  min-width: 210px;
+  margin-top: 0.6rem !important;
+  animation: dropdownIn 0.14s ease-out;
+}
+
+@keyframes dropdownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-dropdown .dropdown-item {
+  border-radius: 9px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--ink, #1f2230);
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.user-dropdown .dropdown-item:hover {
+  background-color: #fff5f5;
+  color: #ef4747;
+}
+
+.user-dropdown .dropdown-item.text-danger:hover {
+  background-color: #ef4747;
+  color: #ffffff !important;
+}
+
+.user-dropdown .dropdown-divider {
+  margin: 0.35rem 0;
+  border-color: #f0f0f0;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+/* Tablet: nombre de usuario más corto */
+@media (max-width: 1024px) {
+  .app-user-name {
+    max-width: 100px;
+  }
+}
+
+/* Móvil: aparece logout rápido, se oculta nombre de usuario en trigger */
+@media (max-width: 720px) {
+  .app-navbar-inner {
+    padding: 0.5rem 0.9rem;
+  }
+
+  .app-logout-quick {
+    display: inline-block;
+  }
+
+  .app-user-name {
     display: none;
+  }
+
+  .app-user-trigger {
+    padding: 0.25rem;
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .app-user-trigger:hover {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .app-user-chevron {
+    display: none;
+  }
+
+  .app-brand-text {
+    font-size: 1rem;
+  }
+
+  .app-brand-mark {
+    width: 26px;
+    height: 26px;
+  }
+
+  .app-brand-mark::after {
+    inset: 6px;
+  }
 }
 
-.logout-item:hover{
-    cursor:pointer;
+@media (max-width: 400px) {
+  .app-logout-quick {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.6rem;
+  }
 }
 
-#my-avatar{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid white;
-    padding: 10%;
-    object-fit: cover;
-}
-
-.dropdown-menu[data-bs-popper]{
-    top: unset;
-    left: unset;
-    right: 10px;
-}
-
-@media only screen and (max-width: 1000px){
-    .navbar-toggler{
-        display: none;
-    }
-
-    .logout-item{
-        display: block;
-    }
+/* ============================================================
+   Accesibilidad
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .app-brand,
+  .app-user-trigger,
+  .app-user-avatar,
+  .app-logout-quick,
+  .user-dropdown {
+    animation: none !important;
+    transition: none !important;
+  }
 }

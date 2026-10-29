@@ -1,0 +1,335 @@
+/* ============================================================
+   Contenedor del modal
+   ============================================================ */
+.invite-container {
+  --brand-1: #ef4747;
+  --brand-2: #ff7b7b;
+  --brand-3: #7c3aed;
+  --ink: #1f2230;
+  --muted: #6b7280;
+  --surface: #ffffff;
+  --surface-soft: #f7f8fb;
+  --surface-hover: #fdf0f0;
+  --border: #e6e8ef;
+  --focus: rgba(239, 71, 71, 0.18);
+  --focus-purple: rgba(124, 58, 237, 0.18);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.25rem;
+  font-family:
+    "Inter",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: var(--ink);
+}
+
+/* ============================================================
+   Cabecera (duo / group)
+   ============================================================ */
+.invite-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.4rem;
+  padding: 1.25rem 1rem 1.5rem;
+  border-radius: 18px;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Modo duo: rojo suave */
+.invite-header-duo {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(239, 71, 71, 0.1), transparent 55%),
+    linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+  border-color: rgba(239, 71, 71, 0.14);
+}
+
+/* Modo group: morado suave */
+.invite-header-group {
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(124, 58, 237, 0.12),
+      transparent 55%
+    ),
+    linear-gradient(135deg, #f5f0ff 0%, #ece2ff 100%);
+  border-color: rgba(124, 58, 237, 0.16);
+}
+
+/* Pill de modo (arriba) */
+.invite-mode-pill {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  border-radius: 999px;
+  color: #ffffff;
+  margin-bottom: 0.35rem;
+}
+
+.invite-mode-duo {
+  background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+  box-shadow: 0 6px 14px -6px rgba(239, 71, 71, 0.6);
+}
+
+.invite-mode-group {
+  background: linear-gradient(135deg, var(--brand-3), #a480ff);
+  box-shadow: 0 6px 14px -6px rgba(124, 58, 237, 0.6);
+}
+
+/* Título y subtítulo */
+.invite-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.invite-title b {
+  color: var(--brand-3);
+}
+
+.invite-subtitle {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0;
+  max-width: 340px;
+  line-height: 1.45;
+}
+
+/* ============================================================
+   Ilustración
+   ============================================================ */
+.invite-illustration-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.75rem;
+}
+
+.invite-illustration-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -15% -20%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(239, 71, 71, 0.18) 0%,
+    transparent 60%
+  );
+  z-index: -1;
+}
+
+.invite-header-group .invite-illustration-wrap::before {
+  background: radial-gradient(
+    circle,
+    rgba(124, 58, 237, 0.18) 0%,
+    transparent 60%
+  );
+}
+
+.invite-illustration {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 12px 24px rgba(15, 20, 40, 0.15));
+  animation: floatIn 0.4s ease-out;
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================================
+   Búsqueda
+   ============================================================ */
+.invite-search {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 0.25rem;
+}
+
+.invite-search-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.2px;
+}
+
+.invite-search-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.invite-search-icon {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  color: var(--muted);
+  pointer-events: none;
+  transition: color 0.18s ease;
+}
+
+.invite-search-form {
+  flex: 1 1 auto;
+  width: 100%;
+  margin: 0;
+}
+
+.invite-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  font-size: 0.92rem;
+  color: var(--ink);
+  background: var(--surface-soft);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  outline: none;
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.invite-input::placeholder {
+  color: #9aa0ab;
+}
+
+.invite-input:hover {
+  border-color: #d5d8e3;
+}
+
+.invite-input:focus {
+  background: #ffffff;
+  border-color: var(--brand-1);
+  box-shadow: 0 0 0 4px var(--focus);
+}
+
+.invite-search-input-wrap:focus-within .invite-search-icon {
+  color: var(--brand-1);
+}
+
+/* ============================================================
+   Bloque informativo (por si reactivas el comentario)
+   ============================================================ */
+.invite-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 12px;
+  background: var(--surface-soft);
+  border-left: 3px solid var(--brand-1);
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.invite-info-icon {
+  color: var(--brand-1);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.invite-info-text p {
+  margin: 0;
+}
+
+.invite-info-text p + p {
+  margin-top: 0.2rem;
+}
+
+/* ============================================================
+   Lista de usuarios
+   ============================================================ */
+.invite-results {
+  max-height: 42vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(239, 71, 71, 0.25) transparent;
+}
+
+.invite-results::-webkit-scrollbar {
+  width: 6px;
+}
+
+.invite-results::-webkit-scrollbar-thumb {
+  background-color: rgba(239, 71, 71, 0.25);
+  border-radius: 3px;
+}
+
+.invite-results::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(239, 71, 71, 0.45);
+}
+
+/* ============================================================
+   Accesibilidad
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .invite-illustration {
+    animation: none !important;
+  }
+
+  .invite-input,
+  .invite-search-icon {
+    transition: none !important;
+  }
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 576px) {
+  .invite-header {
+    padding: 1rem 0.75rem 1.25rem;
+    border-radius: 16px;
+  }
+
+  .invite-title {
+    font-size: 1.05rem;
+  }
+
+  .invite-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .invite-illustration {
+    width: 78px;
+    height: 78px;
+  }
+
+  .invite-input {
+    padding: 0.65rem 0.9rem 0.65rem 2.3rem;
+    font-size: 0.88rem;
+  }
+
+  .invite-results {
+    max-height: 36vh;
+  }
+}

@@ -1,66 +1,701 @@
-.user-img{
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
+/* ============================================================
+   Página
+   ============================================================ */
+.settings-page {
+  --brand-1: #ef4747;
+  --brand-2: #ff7b7b;
+  --brand-3: #7c3aed;
+  --ink: #1f2230;
+  --muted: #6b7280;
+  --surface: #ffffff;
+  --surface-soft: #f7f8fb;
+  --surface-hover: #fdf0f0;
+  --border: #e6e8ef;
+  --focus: rgba(239, 71, 71, 0.18);
+
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+  min-height: calc(100vh - 72px);
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(239, 71, 71, 0.04),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 0% 100%,
+      rgba(124, 58, 237, 0.03),
+      transparent 40%
+    ),
+    var(--surface-soft);
+  font-family:
+    "Inter",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: var(--ink);
 }
 
-.settings-card{
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+/* ============================================================
+   Tarjeta
+   ============================================================ */
+.settings-card {
+  width: 100%;
+  max-width: 620px;
+  background: var(--surface);
+  border-radius: 20px;
+  box-shadow:
+    0 1px 2px rgba(15, 20, 40, 0.04),
+    0 20px 40px -20px rgba(15, 20, 40, 0.15),
+    0 40px 80px -40px rgba(15, 20, 40, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  overflow: hidden;
+  animation: settingsIn 0.4s ease-out both;
 }
 
-.input-image{
-    position: absolute;
-    left: 53%;
+@keyframes settingsIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-
-.bg-edit-icon{
-    background: #ef4747 !important;
-    border-color: #ef4747 !important;
-    color: white;
+/* ============================================================
+   Header (grid de 3 columnas para centrar el título)
+   ============================================================ */
+.settings-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
 }
 
-.bg-edit-icon:hover{
-    background: #e62c2c !important;
-    cursor: pointer;
-    transform: translateY(-5px);
-    transition: .2s ease-in-out;
+.settings-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--brand-1);
+  background: var(--surface-soft);
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.12s ease,
+    box-shadow 0.15s ease;
 }
 
-input[type="file"]{
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap; /* 1 */
-    clip-path: inset(50%);
-    border: 0;
+.settings-back-btn:hover,
+.settings-back-btn:focus-visible {
+  color: #ffffff;
+  background: var(--brand-1);
+  border-color: var(--brand-1);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px -8px rgba(239, 71, 71, 0.55);
+  outline: none;
 }
 
-.btn-save{
-    color: white;
-    background-color: #ef4747;
-    border-color: #ef4747;
+.settings-back-btn:active {
+  transform: translateY(0);
 }
 
-.bg-back-btn{
-    color: white;
-    background-color: #ef4747;
-    border-color: #ef4747; 
+.settings-back-btn:focus-visible {
+  box-shadow:
+    0 0 0 4px var(--focus),
+    0 8px 18px -8px rgba(239, 71, 71, 0.55);
 }
 
-.bg-back-btn:hover{
-    cursor: pointer;
+.settings-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: var(--ink);
+  text-align: center;
+  margin: 0;
 }
 
-#delete-h6:hover{
-    cursor: pointer;
+.settings-header-spacer {
+  width: 1rem;
 }
 
-.input-col{
-    overflow: hidden;
+/* ============================================================
+   Cuerpo
+   ============================================================ */
+.settings-body {
+  padding: 1.5rem 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ============================================================
+   Sección avatar
+   ============================================================ */
+.settings-avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  padding-bottom: 0.5rem;
+}
+
+.settings-section-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+}
+
+.settings-avatar-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-avatar {
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ffffff;
+  box-shadow:
+    0 0 0 1px var(--border),
+    0 12px 28px -12px rgba(15, 20, 40, 0.25);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  display: block;
+}
+
+.settings-avatar-wrap:hover .settings-avatar {
+  transform: scale(1.03);
+  box-shadow:
+    0 0 0 1px var(--border),
+    0 16px 32px -14px rgba(239, 71, 71, 0.35);
+}
+
+/* Botón editar (label del file input) */
+.settings-avatar-edit {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  z-index: 2;
+}
+
+.settings-file-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 3px var(--surface),
+    0 6px 14px -6px rgba(239, 71, 71, 0.6);
+  font-size: 0.8rem;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.settings-file-btn:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 0 0 3px var(--surface),
+    0 10px 20px -8px rgba(239, 71, 71, 0.75);
+  filter: brightness(1.03);
+}
+
+.settings-file-btn input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+  border: 0;
+}
+
+.settings-file-btn:focus-within {
+  box-shadow:
+    0 0 0 3px var(--surface),
+    0 0 0 6px var(--focus),
+    0 6px 14px -6px rgba(239, 71, 71, 0.6);
+}
+
+/* ============================================================
+   Formulario
+   ============================================================ */
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.settings-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.2px;
+}
+
+.settings-input {
+  width: 100%;
+  padding: 0.75rem 0.95rem;
+  font-size: 0.92rem;
+  color: var(--ink);
+  background: var(--surface-soft);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  outline: none;
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.settings-input::placeholder {
+  color: #9aa0ab;
+}
+
+.settings-input:hover {
+  border-color: #d5d8e3;
+}
+
+.settings-input:focus {
+  background: #ffffff;
+  border-color: var(--brand-1);
+  box-shadow: 0 0 0 4px var(--focus);
+}
+
+/* ============================================================
+   Botón Save
+   ============================================================ */
+.settings-save-btn {
+  margin-top: 0.35rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 12px 24px -12px rgba(239, 71, 71, 0.6);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.settings-save-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 30px -14px rgba(239, 71, 71, 0.7);
+  filter: brightness(1.02);
+}
+
+.settings-save-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 8px 16px -10px rgba(239, 71, 71, 0.6);
+}
+
+.settings-save-btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 4px var(--focus),
+    0 12px 24px -12px rgba(239, 71, 71, 0.6);
+}
+
+.settings-save-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.settings-save-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+/* Spinner propio */
+.settings-spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================
+   Feedback (error / éxito)
+   ============================================================ */
+.settings-feedback {
+  margin: 0;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 10px;
+  text-align: center;
+  animation: feedbackIn 0.25s ease-out;
+}
+
+.settings-feedback-error {
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.settings-feedback-success {
+  color: #15803d;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+@keyframes feedbackIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   Divider + zona peligrosa
+   ============================================================ */
+.settings-divider {
+  border: 0;
+  border-top: 1px dashed var(--border);
+  margin: 0.25rem 0;
+}
+
+.settings-danger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.settings-danger-text {
+  min-width: 0;
+}
+
+.settings-danger-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #b91c1c;
+  margin: 0 0 0.15rem;
+}
+
+.settings-danger-desc {
+  font-size: 0.78rem;
+  color: #7f1d1d;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.settings-delete-btn {
+  flex-shrink: 0;
+  padding: 0.55rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #ffffff;
+  background: #dc2626;
+  border: 1.5px solid #dc2626;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    transform 0.12s ease,
+    box-shadow 0.15s ease;
+}
+
+.settings-delete-btn:hover,
+.settings-delete-btn:focus-visible {
+  background: #b91c1c;
+  border-color: #b91c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px -8px rgba(220, 38, 38, 0.5);
+  outline: none;
+}
+
+.settings-delete-btn:active {
+  transform: translateY(0);
+}
+
+.settings-delete-btn:focus-visible {
+  box-shadow:
+    0 0 0 4px rgba(220, 38, 38, 0.2),
+    0 8px 18px -8px rgba(220, 38, 38, 0.5);
+}
+
+/* ============================================================
+   Modal
+   ============================================================ */
+.settings-modal-content {
+  border: none;
+  border-radius: 18px;
+  box-shadow:
+    0 1px 2px rgba(15, 20, 40, 0.04),
+    0 20px 40px -20px rgba(15, 20, 40, 0.18),
+    0 40px 80px -40px rgba(15, 20, 40, 0.12);
+  overflow: hidden;
+}
+
+.settings-modal-content .modal-header {
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 1.25rem;
+}
+
+.settings-modal-body {
+  text-align: center;
+  padding: 1.5rem 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.settings-modal-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.settings-modal-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+}
+
+.settings-modal-text {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.45;
+}
+
+.settings-modal-text-small {
+  font-size: 0.78rem;
+  color: #a3a8b5;
+}
+
+.settings-github-link {
+  color: var(--brand-1);
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+
+.settings-github-link:hover {
+  color: #c01b1b;
+}
+
+.settings-modal-footer {
+  border-top: 1px solid var(--border);
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.settings-modal-cancel {
+  padding: 0.55rem 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--surface-soft);
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.settings-modal-cancel:hover {
+  background: #ffffff;
+  border-color: #d5d8e3;
+}
+
+.settings-modal-cancel:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--focus);
+}
+
+.settings-modal-confirm {
+  padding: 0.55rem 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: #1f2230;
+  border: 1.5px solid #1f2230;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    transform 0.12s ease;
+}
+
+.settings-modal-confirm:hover,
+.settings-modal-confirm:focus-visible {
+  background: #000000;
+  border-color: #000000;
+  outline: none;
+  box-shadow: 0 8px 18px -8px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   Accesibilidad
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .settings-card,
+  .settings-avatar,
+  .settings-back-btn,
+  .settings-save-btn,
+  .settings-file-btn,
+  .settings-delete-btn,
+  .settings-modal-cancel,
+  .settings-modal-confirm,
+  .settings-feedback {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .settings-avatar-wrap:hover .settings-avatar,
+  .settings-back-btn:hover,
+  .settings-save-btn:hover,
+  .settings-file-btn:hover,
+  .settings-delete-btn:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 640px) {
+  .settings-page {
+    padding: 1rem 0.75rem;
+    min-height: calc(100vh - 60px);
+  }
+
+  .settings-header {
+    padding: 0.75rem 0.85rem;
+    gap: 0.65rem;
+  }
+
+  .settings-title {
+    font-size: 0.95rem;
+  }
+
+  .settings-body {
+    padding: 1.25rem 1rem 1rem;
+    gap: 1rem;
+  }
+
+  .settings-avatar {
+    width: 88px;
+    height: 88px;
+  }
+
+  .settings-danger {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .settings-delete-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .settings-title {
+    font-size: 0.88rem;
+  }
+
+  .settings-back-btn {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.76rem;
+  }
+
+  .settings-avatar {
+    width: 76px;
+    height: 76px;
+  }
+
+  .settings-avatar-edit {
+    right: 0;
+    bottom: 0;
+  }
+
+  .settings-file-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 0.7rem;
+  }
+
+  .settings-input {
+    padding: 0.65rem 0.85rem;
+    font-size: 0.88rem;
+  }
+
+  .settings-save-btn {
+    padding: 0.75rem 0.9rem;
+    font-size: 0.88rem;
+  }
 }

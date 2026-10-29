@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_URL: 'https://api-rest-chat.onrender.com', // public
+  API_URL: 'http://localhost:3000', // public
 };
 
 /*

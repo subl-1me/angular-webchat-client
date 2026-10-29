@@ -1,30 +1,100 @@
 <div class="invite-container">
-    
-    <div class="duo-invitation" *ngIf="inviteType === 'duo'">
-        <h5 class="">Send a request to your friend</h5>
-        <img src="../../../assets/images/conversation-image.svg" class="img-fluid rounded-circle">
+  <!-- ============================================================
+       Cabecera: modo duo (nueva conversación)
+       ============================================================ -->
+  <div class="invite-header invite-header-duo" *ngIf="inviteType === 'duo'">
+    <span class="invite-mode-pill invite-mode-duo">New chat</span>
+
+    <h3 class="invite-title">Send a request to your friend</h3>
+    <p class="invite-subtitle">
+      We'll notify them when they accept. You can start chatting right after.
+    </p>
+
+    <div class="invite-illustration-wrap">
+      <img
+        src="../../../assets/images/conversation-image.svg"
+        class="invite-illustration"
+        alt="Friends starting a new conversation"
+      />
     </div>
+  </div>
 
-    <div class="group-invitation" *ngIf="inviteType === 'group'">
-        <h5 class="mb-0"><b>Expand</b> the conversation</h5>
-        <h5 class="mb-0">to other people</h5>
-        <img src="../../../assets/images/group-invite.svg" class="img-fluid rounded">
+  <!-- ============================================================
+       Cabecera: modo group (agregar a conversación existente)
+       ============================================================ -->
+  <div class="invite-header invite-header-group" *ngIf="inviteType === 'group'">
+    <span class="invite-mode-pill invite-mode-group">Add to group</span>
+
+    <h3 class="invite-title"><b>Expand</b> the conversation to more people</h3>
+    <p class="invite-subtitle">Invite a new member to join this group chat.</p>
+
+    <div class="invite-illustration-wrap">
+      <img
+        src="../../../assets/images/group-invite.svg"
+        class="invite-illustration"
+        alt="Add more people to the group conversation"
+      />
     </div>
-    
-    <h6 class="text-muted">Type your friend's username:</h6>
-    <form #searchUserForm="ngForm">
-        <input type="text" placeholder="Username" name="username" 
-        [(ngModel)]="username" class="form-control p-2">
-    </form>
+  </div>
 
-    <!-- <div class="some-messages text-muted p-2 bg-light rounded mt-2">
-        <fa-icon [icon]="faInfoCircle"></fa-icon>
-        <h6 class="small mb-0">- You will be notified when a request was expired.</h6>
-        <h6 class="small">- Users can declined or accepted it.</h6>
-    </div> -->
+  <!-- ============================================================
+       Campo de búsqueda
+       ============================================================ -->
+  <div class="invite-search">
+    <label for="invite-username" class="invite-search-label">
+      Search user
+    </label>
 
-    <div class="searched-users mt-2">
-        <app-user-list [username]="username" [chatId]="chatId"></app-user-list>
+    <div class="invite-search-input-wrap">
+      <span class="invite-search-icon" aria-hidden="true">
+        <!-- icono lupa (inline svg, no requiere la librería) -->
+        <svg
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </span>
+
+      <form #searchUserForm="ngForm" class="invite-search-form">
+        <input
+          id="invite-username"
+          type="text"
+          placeholder="Type your friend's username"
+          name="username"
+          [(ngModel)]="username"
+          class="invite-input"
+          autocomplete="off"
+          aria-label="Friend's username"
+        />
+      </form>
     </div>
+  </div>
 
+  <!-- ============================================================
+       Nota informativa (comentada por si la reactivas)
+       ============================================================ -->
+  <!--
+  <div class="invite-info">
+    <fa-icon [icon]="faInfoCircle" class="invite-info-icon"></fa-icon>
+    <div class="invite-info-text">
+      <p>You will be notified when a request was expired.</p>
+      <p>Users can decline or accept it.</p>
+    </div>
+  </div>
+  -->
+
+  <!-- ============================================================
+       Lista de usuarios encontrados
+       ============================================================ -->
+  <div class="invite-results">
+    <app-user-list [username]="username" [chatId]="chatId"></app-user-list>
+  </div>
 </div>

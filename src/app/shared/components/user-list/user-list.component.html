@@ -1,24 +1,41 @@
-<div class="list-group p-2">
-    <small class="text-muted float-start">Users found: ({{users.length}})</small>
-    <ng-container *ngFor="let user of users">
-        <div class="list-group-item shadow-sm mb-2">
-            <div class="row">
-                <div class="col-2">
-                    <img src="{{user.avatar.url}}" id="user-img">
-                </div>
-                <div class="col-5">
-                    <div class="user-information float-start mt-auto mb-auto">
-                        <h6 class="fw-bold mb-0">{{user.username}}</h6>
-                        <h6 class="text-muted small">
-                            Last seen: {{stringAsDate(user.createdAt) | date:'shortDate'}}
-                        </h6>
-                    </div>
-                </div>
-                <div class="col-5 mt-auto mb-auto">
-                    <!-- <button type="button" class="btn btn-secondary p-2">Send request</button> -->
-                    <h6 class="d-inline" id="send-request" (click)="sendRequest(user)">Send request</h6>
-                </div>
-            </div>
-        </div>
-    </ng-container>
+<div class="user-list">
+  <!-- Contador superior -->
+  <div class="user-list-counter-row">
+    <span class="user-list-counter">
+      Users found: <strong>{{ users.length }}</strong>
+    </span>
+  </div>
+
+  <!-- Lista de usuarios -->
+  <ng-container *ngFor="let user of users">
+    <div class="user-list-item">
+      <!-- Avatar -->
+      <div class="user-list-avatar-wrap">
+        <img
+          [src]="user.avatar.url"
+          class="user-list-avatar"
+          [alt]="'Avatar of ' + user.username"
+        />
+      </div>
+
+      <!-- Información -->
+      <div class="user-list-info">
+        <h6 class="user-list-name">{{ user.username }}</h6>
+        <small class="user-list-meta">
+          Last seen: {{ stringAsDate(user.createdAt) | date: "shortDate" }}
+        </small>
+      </div>
+
+      <!-- Acción -->
+      <button
+        type="button"
+        class="user-list-action"
+        (click)="sendRequest(user)"
+        [title]="'Send request to ' + user.username"
+        [attr.aria-label]="'Send request to ' + user.username"
+      >
+        Send request
+      </button>
+    </div>
+  </ng-container>
 </div>

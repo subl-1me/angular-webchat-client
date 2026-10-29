@@ -60,6 +60,7 @@ const { SEND_MESSAGE_EVENT, OPEN_CHAT_EVENT, SEE_UNREAD_MESSAGES_EVENT } =
 export class ChatComponent implements OnInit, OnChanges, DoCheck {
   @Input() selectedChat: Chat;
   @Output() removedChatId = new EventEmitter<string>();
+  public isSendingMessage: boolean = false;
 
   // Icons
   faPaperPlane = faPaperPlane;
@@ -102,7 +103,7 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
     private imageService: ImageService,
     private cloudinaryService: CloudinaryService,
     private chatListService: ChatListService,
-    private usersTypingService: UsersTypingService
+    private usersTypingService: UsersTypingService,
   ) {
     this.loadedImages = [];
     this.selectedChat = { _id: '', participants: [], messages: [] };
@@ -134,15 +135,15 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
         chatContainerScrollElem &&
         chatContainerScrollElem.scrollTop < chatContainerScrollElem.scrollHeight
       ) {
-        this.hasUnreadMessages = true;
-        this.unreadMessagesCounter++;
+        // this.hasUnreadMessages = true;
+        // this.unreadMessagesCounter++;
       }
     });
   }
 
   ngDoCheck(): void {
     this.usersTyping = this.usersTypingService.users;
-    this.isFirstLoad = !!localStorage.getItem('isFirstLoad');
+    this.isFirstLoad = !localStorage.getItem('isFirstLoad');
 
     let chatContainerScrollElem = document.getElementById('container-scroll');
     // console.log(chatContainerScrollElem?.scrollTop);
@@ -226,6 +227,7 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
   }
 
   public sendMessage(): void {
+    this.isSendingMessage = true;
     this.usersTypingService.resetTyping();
     if (this.message.content === '' && this.loadedImages.length < 1) return; // Empty case return
 
@@ -243,6 +245,7 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
 
       if (response.errorCode || response.status === 'error') return; // Pending to add feedback
 
+      this.isSendingMessage = false;
       // Send socket with new message
       this.message.content = '';
       this.socketService.sendNewMessage(response.message);
@@ -328,7 +331,7 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
         this.socketService.updateParticipantList(
           userToRemove,
           'remove',
-          chatId
+          chatId,
         );
       });
   }

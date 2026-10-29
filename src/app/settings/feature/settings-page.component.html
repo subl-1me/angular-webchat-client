@@ -1,132 +1,168 @@
 <app-navbar></app-navbar>
-<div class="container mt-auto mb-auto">
-  <div class="row">
-    <div class="col-lg-6 col-12 me-auto ms-auto">
-      <div class="card shadow-sm settings-card">
-        <div class="card-header bg-light">
-          <div
-            class="controls p-2 d-inline-block rounded bg-back-btn"
-            [routerLink]="['/home']"
-          >
-            <fa-icon [icon]="faChevronLeft" class=""></fa-icon>
-            Back
-          </div>
-          <h5 class="text-center">Account settings</h5>
+
+<div class="settings-page">
+  <div class="settings-card">
+    <!-- ============================================================
+         Header
+         ============================================================ -->
+    <header class="settings-header">
+      <a
+        class="settings-back-btn"
+        [routerLink]="['/home']"
+        aria-label="Go back to home"
+      >
+        <fa-icon [icon]="faChevronLeft" aria-hidden="true"></fa-icon>
+        <span>Back</span>
+      </a>
+
+      <h1 class="settings-title">Account settings</h1>
+
+      <!-- placeholder para mantener el título centrado en grid de 3 columnas -->
+      <span class="settings-header-spacer" aria-hidden="true"></span>
+    </header>
+
+    <!-- ============================================================
+         Contenido
+         ============================================================ -->
+    <div class="settings-body">
+      <section class="settings-avatar-section">
+        <h2 class="settings-section-title">Profile image</h2>
+
+        <div class="settings-avatar-wrap">
+          <img
+            [src]="imageAsDataUrl[0]"
+            class="settings-avatar"
+            alt="Your profile picture"
+            *ngIf="imageAsDataUrl !== ''"
+          />
+          <img
+            [src]="userAuth.avatar.url"
+            class="settings-avatar"
+            [alt]="'Avatar of ' + userAuth.username"
+            *ngIf="imageAsDataUrl === ''"
+          />
+
+          <span class="settings-avatar-edit">
+            <label
+              class="settings-file-btn"
+              aria-label="Change profile picture"
+            >
+              <input
+                type="file"
+                (change)="handleFile($event)"
+                accept="image/*"
+                aria-label="Change profile picture"
+              />
+              <fa-icon [icon]="faPenToSquare" aria-hidden="true"></fa-icon>
+            </label>
+          </span>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           Formulario
+           ============================================================ -->
+      <form
+        #settingsForm="ngForm"
+        (ngSubmit)="onSubmit()"
+        class="settings-form"
+      >
+        <!-- Username -->
+        <div class="settings-field">
+          <label for="username" class="settings-label">Username</label>
+          <input
+            id="username"
+            type="text"
+            class="settings-input"
+            name="username"
+            [(ngModel)]="username"
+            autocomplete="username"
+          />
         </div>
 
-        <div class="card-body p-3">
-          <h6 class="text-center">Profile image</h6>
+        <!-- Botón guardar -->
+        <button
+          type="submit"
+          class="settings-save-btn"
+          [disabled]="
+            (userAuth.username === username && imageAsDataUrl === '') ||
+            onLoading
+          "
+        >
+          <span class="settings-save-content" *ngIf="!onLoading">
+            <fa-icon [icon]="faSave" aria-hidden="true"></fa-icon>
+            <span>Save changes</span>
+          </span>
 
-          <form #settingsForm="ngForm" (ngSubmit)="onSubmit()">
-            <div class="row text-center">
-              <div class="col-12 mb-2">
-                <span class="input-image p-0 d-inline-block" id="basic-addon2">
-                  <label class="custom-file-upload">
-                    <input type="file" (change)="handleFile($event)" />
-                    <div class="badge bg-edit-icon rounded-circle shadow p-2">
-                      <fa-icon [icon]="faPenToSquare" class="m-auto"></fa-icon>
-                    </div>
-                  </label>
-                </span>
-                <img
-                  src="{{ imageAsDataUrl[0] }}"
-                  id="avatar"
-                  class="user-img"
-                  *ngIf="imageAsDataUrl !== ''"
-                />
-                <img
-                  src="{{ userAuth.avatar.url }}"
-                  id="avatar"
-                  class="user-img"
-                  *ngIf="imageAsDataUrl === ''"
-                />
-              </div>
-              <!-- 
-                            <div class="col-12 mb-2 input-col">
-                                <input type="file" (change)="handleFile($event)">
-                                <br>
-                                <small class="text-danger" *ngIf="serviceMessage !== ''">
-                                    Only images are allowed.
-                                </small>
-                            </div> -->
+          <span class="settings-save-content" *ngIf="onLoading">
+            <span
+              class="settings-spinner"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            <span>Loading...</span>
+          </span>
+        </button>
 
-              <div class="col-6 ms-auto me-auto">
-                <label for="username">Username</label>
-                <input
-                  id="username"
-                  type="text"
-                  class="form-control"
-                  name="username"
-                  [(ngModel)]="username"
-                />
-              </div>
+        <!-- Error de actualización -->
+        <p
+          class="settings-feedback settings-feedback-error"
+          *ngIf="updaterResponse !== '' && updaterResponse !== 'success'"
+          role="alert"
+        >
+          {{ updaterResponse }}. 🙁
+        </p>
 
-              <div class="col-12 mt-3">
-                <button
-                  class="btn btn-save"
-                  [disabled]="
-                    (userAuth.username === username && imageAsDataUrl === '') ||
-                    onLoading
-                  "
-                >
-                  <div class="content" *ngIf="!onLoading">
-                    <fa-icon [icon]="faSave" class="me-1"></fa-icon>
-                    Save changes
-                  </div>
+        <!-- Éxito -->
+        <p
+          class="settings-feedback settings-feedback-success"
+          *ngIf="updaterResponse === 'success'"
+          role="status"
+        >
+          Profile updated successfully. 🔥
+        </p>
+      </form>
 
-                  <div class="content" *ngIf="onLoading">
-                    <div class="spinner-border spinner-border-sm" role="status">
-                      <span class="visually-hidden">Loading...</span>
-                    </div>
-                    Loading...
-                  </div>
-                </button>
-              </div>
+      <hr class="settings-divider" />
 
-              <div
-                class="col-12 mt-2"
-                *ngIf="updaterResponse !== '' && updaterResponse !== 'success'"
-              >
-                <small class="text-danger text-center">
-                  {{ updaterResponse }}. 🙁
-                </small>
-              </div>
-
-              <div class="col-12 mt-2" *ngIf="updaterResponse === 'success'">
-                <small class="text-success text-center">
-                  Profile updated successfully. 🔥
-                </small>
-              </div>
-            </div>
-          </form>
-          <hr />
-
-          <h6
-            class="text-danger fw-bold text-decoration-underline"
-            id="delete-h6"
-            data-bs-toggle="modal"
-            data-bs-target="#deleteSure"
-          >
-            Delete account
-          </h6>
+      <!-- ============================================================
+           Zona peligrosa
+           ============================================================ -->
+      <section class="settings-danger">
+        <div class="settings-danger-text">
+          <h3 class="settings-danger-title">Delete account</h3>
+          <p class="settings-danger-desc">
+            This action is permanent and cannot be undone.
+          </p>
         </div>
-      </div>
+
+        <button
+          type="button"
+          class="settings-delete-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteSure"
+        >
+          Delete account
+        </button>
+      </section>
     </div>
   </div>
 </div>
 
-<!-- Modal -->
+<!-- ============================================================
+     Modal: confirmar eliminación
+     ============================================================ -->
 <div
   class="modal fade"
   id="deleteSure"
   tabindex="-1"
-  aria-labelledby="deleteSure"
+  aria-labelledby="deleteSureLabel"
   aria-hidden="true"
 >
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content settings-modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteSure">Delete account</h5>
+        <h5 class="modal-title" id="deleteSureLabel">Delete account</h5>
         <button
           type="button"
           class="btn-close"
@@ -134,20 +170,40 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body text-center">
-        <h6 class="fw-bold mb-0">Thanks for testing <3</h6>
-        <h6 class="fw-bold text-decoration-underline">
-          All data recopiled about you will be removed.
-        </h6>
-        <h6 class="mb-0">Site made by: Julio Ugalde Aguilar</h6>
-        <h6 class="mb-0">github: https://github.com/subl-1me</h6>
+
+      <div class="modal-body settings-modal-body">
+        <div class="settings-modal-icon" aria-hidden="true">⚠</div>
+        <h6 class="settings-modal-title">Thanks for testing &lt;3</h6>
+        <p class="settings-modal-text">
+          All data collected about you will be removed.
+        </p>
+        <p class="settings-modal-text settings-modal-text-small">
+          Site made by Julio Ugalde Aguilar.
+        </p>
+        <a
+          href="https://github.com/subl-1me"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="settings-github-link"
+        >
+          https://github.com/subl-1me
+        </a>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn" data-bs-dismiss="modal">
+
+      <div class="modal-footer settings-modal-footer">
+        <button
+          type="button"
+          class="settings-modal-cancel"
+          data-bs-dismiss="modal"
+        >
           Cancel
         </button>
-        <button type="button" class="btn btn-dark" (click)="removeAccount()">
-          Ok, delete
+        <button
+          type="button"
+          class="settings-modal-confirm"
+          (click)="removeAccount()"
+        >
+          Yes, delete
         </button>
       </div>
     </div>
