@@ -2,28 +2,20 @@
 
 <div class="settings-page">
   <div class="settings-card">
-    <!-- ============================================================
-         Header
-         ============================================================ -->
     <header class="settings-header">
-      <a
+      <!-- <a
         class="settings-back-btn"
         [routerLink]="['/home']"
         aria-label="Go back to home"
       >
         <fa-icon [icon]="faChevronLeft" aria-hidden="true"></fa-icon>
         <span>Back</span>
-      </a>
+      </a> -->
 
-      <h1 class="settings-title">Account settings</h1>
-
-      <!-- placeholder para mantener el título centrado en grid de 3 columnas -->
+      <h1 class="settings-title">Account Settings</h1>
       <span class="settings-header-spacer" aria-hidden="true"></span>
     </header>
 
-    <!-- ============================================================
-         Contenido
-         ============================================================ -->
     <div class="settings-body">
       <section class="settings-avatar-section">
         <h2 class="settings-section-title">Profile image</h2>
@@ -59,9 +51,6 @@
         </div>
       </section>
 
-      <!-- ============================================================
-           Formulario
-           ============================================================ -->
       <form
         #settingsForm="ngForm"
         (ngSubmit)="onSubmit()"
@@ -80,7 +69,6 @@
           />
         </div>
 
-        <!-- Botón guardar -->
         <button
           type="submit"
           class="settings-save-btn"
@@ -104,35 +92,31 @@
           </span>
         </button>
 
-        <!-- Error de actualización -->
         <p
           class="settings-feedback settings-feedback-error"
           *ngIf="updaterResponse !== '' && updaterResponse !== 'success'"
           role="alert"
         >
-          {{ updaterResponse }}. 🙁
+          {{ updaterResponse }}.
         </p>
 
-        <!-- Éxito -->
         <p
           class="settings-feedback settings-feedback-success"
           *ngIf="updaterResponse === 'success'"
           role="status"
         >
-          Profile updated successfully. 🔥
+          Profile updated successfully.
         </p>
       </form>
 
       <hr class="settings-divider" />
 
-      <!-- ============================================================
-           Zona peligrosa
-           ============================================================ -->
       <section class="settings-danger">
         <div class="settings-danger-text">
-          <h3 class="settings-danger-title">Delete account</h3>
+          <h3 class="settings-danger-title">Finish Demo</h3>
           <p class="settings-danger-desc">
-            This action is permanent and cannot be undone.
+            This will end the demo, allowing you to decide whether to keep your
+            account marked as a Tester or delete it entirely.
           </p>
         </div>
 
@@ -142,16 +126,13 @@
           data-bs-toggle="modal"
           data-bs-target="#deleteSure"
         >
-          Delete account
+          Finish
         </button>
       </section>
     </div>
   </div>
 </div>
 
-<!-- ============================================================
-     Modal: confirmar eliminación
-     ============================================================ -->
 <div
   class="modal fade"
   id="deleteSure"
@@ -162,7 +143,9 @@
   <div class="modal-dialog">
     <div class="modal-content settings-modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteSureLabel">Delete account</h5>
+        <h5 class="modal-title" id="deleteSureLabel">
+          Thanks for testing &lt;3
+        </h5>
         <button
           type="button"
           class="btn-close"
@@ -172,12 +155,33 @@
       </div>
 
       <div class="modal-body settings-modal-body">
-        <div class="settings-modal-icon" aria-hidden="true">⚠</div>
-        <h6 class="settings-modal-title">Thanks for testing &lt;3</h6>
         <p class="settings-modal-text">
-          All data collected about you will be removed.
+          All data collected during the demo will be deleted unless you choose
+          to keep your profile marked as a Tester.
         </p>
-        <p class="settings-modal-text settings-modal-text-small">
+
+        <div class="tester-checkbox-wrapper">
+          <label class="tester-checkbox-label">
+            <input
+              type="checkbox"
+              class="tester-checkbox-input"
+              [(ngModel)]="keepAsTester"
+            />
+            <span class="tester-checkbox-custom"></span>
+            <span class="tester-checkbox-text"
+              >Keep my profile marked as a Tester</span
+            >
+          </label>
+        </div>
+        <p
+          class="settings-modal-text settings-modal-text-medium"
+          *ngIf="keepAsTester"
+        >
+          Once you press the "Continue" button, your account will become
+          inaccessible but will still appear in the Testers section.
+        </p>
+        <hr class="settings-divider" />
+        <p class="settings-modal-text settings-modal-text-small mb-0">
           Site made by Julio Ugalde Aguilar.
         </p>
         <a
@@ -202,8 +206,17 @@
           type="button"
           class="settings-modal-confirm"
           (click)="removeAccount()"
+          *ngIf="!keepAsTester"
         >
-          Yes, delete
+          Finish Demo & Delete My Data
+        </button>
+        <button
+          type="button"
+          class="settings-modal-confirm"
+          (click)="markUserAsTester()"
+          *ngIf="keepAsTester"
+        >
+          Continue
         </button>
       </div>
     </div>

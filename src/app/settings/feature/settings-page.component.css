@@ -15,18 +15,12 @@
       transparent 40%
     ),
     var(--surface-soft);
-  font-family:
-    "Inter",
-    "Segoe UI",
-    system-ui,
-    -apple-system,
-    sans-serif;
-  color: var(--ink);
 }
 
 .settings-card {
   width: 100%;
   max-width: 620px;
+  max-height: 550px;
   background: var(--surface);
   border-radius: 20px;
   box-shadow:
@@ -50,8 +44,6 @@
 }
 
 .settings-header {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 1rem;
   padding: 0.85rem 1.1rem;
@@ -105,7 +97,7 @@
   letter-spacing: -0.3px;
   color: var(--ink);
   text-align: center;
-  margin: 0;
+  margin: auto;
 }
 
 .settings-header-spacer {
@@ -318,7 +310,6 @@
   gap: 0.55rem;
 }
 
-/* Spinner propio */
 .settings-spinner {
   width: 16px;
   height: 16px;
@@ -369,9 +360,9 @@
 }
 
 .settings-divider {
-  border: 0;
-  border-top: 1px dashed var(--border);
-  margin: 0.25rem 0;
+  width: 100%;
+  border-top: 1px dashed #927d7d;
+  margin: 1rem 0;
 }
 
 .settings-danger {
@@ -477,8 +468,6 @@
 }
 
 .settings-modal-text {
-  font-size: 0.85rem;
-  color: var(--muted);
   margin: 0;
   line-height: 1.45;
 }
@@ -486,6 +475,11 @@
 .settings-modal-text-small {
   font-size: 0.78rem;
   color: #a3a8b5;
+}
+
+.settings-modal-text-medium {
+  font-size: 0.9rem;
+  color: var(--brand-1);
 }
 
 .settings-github-link {
@@ -576,6 +570,75 @@
   .settings-delete-btn:hover {
     transform: none;
   }
+}
+
+.tester-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.tester-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+.tester-checkbox-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.tester-checkbox-custom {
+  height: 20px;
+  width: 20px;
+  background-color: #f8f9fa;
+  border: 2px solid #d1d5db;
+  border-radius: 6px;
+  display: inline-block;
+  position: relative;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.tester-checkbox-label:hover .tester-checkbox-custom {
+  border-color: var(--brand-1);
+  background-color: rgba(41, 187, 106, 0.05);
+}
+
+.tester-checkbox-input:checked ~ .tester-checkbox-custom {
+  background: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-1) 100%);
+  border-color: var(--brand-1);
+}
+
+.tester-checkbox-input:checked ~ .tester-checkbox-custom::after {
+  content: "";
+  position: absolute;
+  display: block;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.tester-checkbox-text {
+  margin-left: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+/* Efecto al hacer hover en el texto */
+.tester-checkbox-label:hover .tester-checkbox-text {
+  color: #123822;
 }
 
 /* ============================================================

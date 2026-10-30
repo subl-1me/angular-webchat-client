@@ -14,65 +14,63 @@ import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-settings-page',
   templateUrl: './settings-page.component.html',
   styleUrls: ['./settings-page.component.css'],
-  providers: [ 
-    AuthService, 
-    ImageService, 
-    UserService, 
-    CloudinaryService
-  ]
+  providers: [AuthService, ImageService, UserService, CloudinaryService],
 })
 export class SettingsPageComponent implements OnInit {
+  public keepAsTester: boolean = false;
+
   // Icons
   faSave = faSave;
   faTrash = faTrash;
   faPenToSquare = faPenToSquare;
   faChevronLeft = faChevronLeft;
 
-  public userAuth:User = {
+  public userAuth: User = {
     email: '',
-    username: ''
-  }
-  public username:string;
-  public serviceMessage:string;
-  public imageAsDataUrl:string = '';
+    username: '',
+  };
+  public username: string;
+  public serviceMessage: string;
+  public imageAsDataUrl: string = '';
 
-  public updaterResponse:string =  '';
-  public onLoading:boolean = false;
+  public updaterResponse: string = '';
+  public onLoading: boolean = false;
 
   constructor(
     private authService: AuthService,
     private imageService: ImageService,
     private userService: UserService,
-    private cloudinaryService: CloudinaryService
+    private cloudinaryService: CloudinaryService,
   ) {
     this.userAuth = this.authService.getUser();
     this.username = this.userAuth.username;
     this.serviceMessage = '';
-   }
-
-  ngOnInit(): void {
   }
 
-  public onSubmit():void{
-    if(this.username === this.userAuth.username && this.imageAsDataUrl === '') return;
+  ngOnInit(): void {}
+
+  public onSubmit(): void {
+    if (this.username === this.userAuth.username && this.imageAsDataUrl === '')
+      return;
     this.onLoading = true;
 
-    if(this.imageAsDataUrl !== ''){ // there is a image loaded
+    if (this.imageAsDataUrl !== '') {
+      // there is a image loaded
       let formData = this.imageService.createFormData();
       this.cloudinaryService.uploadImages(formData).subscribe((response) => {
-        if(response.error || response.status === 'error') return;
+        if (response.error || response.status === 'error') return;
 
         let properties = this.setUpdateProperties(response.images[0]);
         this.updateUser(properties);
         this.updaterResponse = 'success';
         this.onLoading = false;
-
-      })
+      });
 
       return;
     }
@@ -82,75 +80,90 @@ export class SettingsPageComponent implements OnInit {
     this.updateUser(properties);
   }
 
-  private updateUser(properties:any):void{
-    if(!this.userAuth._id) { return; }
-    this.userService.update(properties, this.userAuth._id).subscribe((response) => {
-      this.onLoading = false;
-      if(response.error || response.status === 'error'){
-        this.updaterResponse = response.message;
-        return;
-      }
+  private updateUser(properties: any): void {
+    if (!this.userAuth._id) {
+      return;
+    }
+    this.userService
+      .update(properties, this.userAuth._id)
+      .subscribe((response) => {
+        this.onLoading = false;
+        if (response.error || response.status === 'error') {
+          this.updaterResponse = response.message;
+          return;
+        }
 
-      this.authService.saveUserInfo(response.updatedUser);
-      this.updaterResponse = 'success';
-      window.location.reload();
-    })
+        this.authService.saveUserInfo(response.updatedUser);
+        this.updaterResponse = 'success';
+        window.location.reload();
+      });
   }
-  
-  private setUpdateProperties(avatar?:any):any{
-    let properties:Properties = {};
 
-    if(avatar){
+  private setUpdateProperties(avatar?: any): any {
+    let properties: Properties = {};
+
+    if (avatar) {
       properties.avatar = {
         value: avatar,
-        action: 'edit'
-      }
+        action: 'edit',
+      };
     }
 
-    if(this.hasNameChanged()){
+    if (this.hasNameChanged()) {
       properties.username = {
         value: this.username,
-        action: 'edit'
-      }
+        action: 'edit',
+      };
     }
 
     return properties;
   }
 
-  private hasNameChanged():boolean{
-    if(this.username !== this.userAuth.username) { return true }
+  private hasNameChanged(): boolean {
+    if (this.username !== this.userAuth.username) {
+      return true;
+    }
 
     return false;
   }
 
-  public handleFile(event:any):void{
-    
+  public handleFile(event: any): void {
     const file = <File>event.target.files[0];
     this.imageService.clear();
     const handlerResponse = this.imageService.handleImage(file);
 
-    if(handlerResponse instanceof String){
+    if (handlerResponse instanceof String) {
       this.serviceMessage = <string>handlerResponse;
       return;
     }
 
     this.imageAsDataUrl = handlerResponse;
     this.serviceMessage = '';
-    
+
     // element.attributes[3].value = this.userAvatar[0];
     // this.imageService.clear();
     // this.userInfo = this.authService.getUserCredentials();
-
   }
 
-  public removeAccount():void{
-    if(!this.userAuth._id) { return; }
+  public removeAccount(): void {
+    if (!this.userAuth._id) {
+      return;
+    }
     this.userService.removeAccount(this.userAuth._id).subscribe((response) => {
       // TODO: add feedback
-      if(response.error || response.status === 'error') { return; } // Pending add feeback
+      if (response.error || response.status === 'error') {
+        return;
+      } // Pending add feeback
 
       this.authService.logOut();
-    })
+    });
   }
 
+  // new on 10/30/2025 ~ different sintaxis for subscriptions using aynsc/await
+  public async markUserAsTester(): Promise<void> {
+    const request = await lastValueFrom(
+      this.userService.markUserAsTester(this.authService.getToken()),
+    );
+    console.log(request);
+  }
 }
