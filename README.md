@@ -58,7 +58,7 @@ Users can communicate through private and group chats, send images, manage their
 
 ### Unread Messages
 
-![Unread Messages](./src/assets/sendit-assets/unread-messages-screen.jpg.jpg)
+![Unread Messages](./src/assets/sendit-assets/unread-messages-screen.jpg)
 
 ### Duo Chat
 
