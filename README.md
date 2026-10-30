@@ -42,28 +42,28 @@ Users can communicate through private and group chats, send images, manage their
 
 ### Main View
 
-![Main View](./assets/sendit-assets/cap1.png)
+![Main View](./src/assets/sendit-assets/cap1.png)
 
 ### Login View
 
-![Login View](./assets/sendit-assets/cap10.png)
+![Login View](./src/assets/sendit-assets/cap10.png)
 
 ### Group Chat
 
-![Group Chat](./assets/sendit-assets/cap9.png)
-![Group Chat 2](./assets/sendit-assets/cap4.png)
+![Group Chat](./src/assets/sendit-assets/cap9.png)
+![Group Chat 2](./src/assets/sendit-assets/cap4.png)
 
 ## Requests
 
-![Requests](./assets/sendit-assets/cap3.png)
+![Requests](./src/assets/sendit-assets/cap3.png)
 
 ### Invite Friends
 
-![Invite Friends](./assets/sendit-assets/cap8.png)
+![Invite Friends](./src/assets/sendit-assets/cap8.png)
 
 ### Profile
 
-![Profile](./assets/sendit-assets/cap7.png)
+![Profile](./src/assets/sendit-assets/cap7.png)
 
 ## Architecture
 
