@@ -42,28 +42,41 @@ Users can communicate through private and group chats, send images, manage their
 
 ### Main View
 
-![Main View](./src/assets/sendit-assets/cap1.png)
+![Main View](./src/assets/sendit-assets/main-screen.jpg)
 
 ### Login View
 
-![Login View](./src/assets/sendit-assets/cap10.png)
+![Login View](./src/assets/sendit-assets/login-screen.jpg)
+
+### Register View
+
+![Login View](./src/assets/sendit-assets/register-screen.jpg)
 
 ### Group Chat
 
-![Group Chat](./src/assets/sendit-assets/cap9.png)
-![Group Chat 2](./src/assets/sendit-assets/cap4.png)
+![Group Chat](./src/assets/sendit-assets/group-messages-screen.jpg)
+
+### Unread Messages
+
+![Unread Messages](./src/assets/sendit-assets/unread-messages-screen.jpg.jpg)
+
+### Duo Chat
+
+![Duo Chat](/src/assets/sendit-assets/chatting-screen-1.jpg)
 
 ## Requests
 
-![Requests](./src/assets/sendit-assets/cap3.png)
+![Requests](./src/assets/sendit-assets/group-request-screen.png)
+![RequestsDuo](./src/assets/sendit-assets/recieving-request-screen.jpg)
 
-### Invite Friends
+### Invite Friends or Create Chat
 
-![Invite Friends](./src/assets/sendit-assets/cap8.png)
+![Invite Friends](./src/assets/sendit-assets/search-user-screen.jpg)
+![Create Chat](./src/assets/sendit-assets/creating-group-screen.jpg)
 
 ### Profile
 
-![Profile](./src/assets/sendit-assets/cap7.png)
+![Profile](./src/assets/sendit-assets/user-settings-screen.jpg.png)
 
 ## Architecture
 
