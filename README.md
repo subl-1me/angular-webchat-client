@@ -76,7 +76,7 @@ Users can communicate through private and group chats, send images, manage their
 
 ### Profile
 
-![Profile](./src/assets/sendit-assets/user-settings-screen.jpg.png)
+![Profile](./src/assets/sendit-assets/user-settings-screen.jpg)
 
 ## Architecture
 
