@@ -239,14 +239,14 @@ Make sure you have installed:
 ### Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone <https://github.com/subl-1me/angular-webchat-client>
 
-cd <project-directory>
+cd <angular-webchat-client>
 ```
 
 ### Install dependencies
 
-Install the backend dependencies (USE PNPM):
+Install the backend dependencies:
 
 ```bash
 pnpm install
@@ -560,14 +560,14 @@ Asegúrate de tener instaladas las siguientes herramientas:
 ### Clonar el repositorio
 
 ```bash
-git clone <repository-url>
+git clone <https://github.com/subl-1me/angular-webchat-client>
 
-cd <project-directory>
+cd <angular-webchat-client>
 ```
 
 ### Instalar dependencias
 
-Instala las dependencias del backend (**UTILIZA PNPM**):
+Instala las dependencias del backend:
 
 ```bash
 pnpm install
