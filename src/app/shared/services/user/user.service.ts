@@ -46,4 +46,10 @@ export class UserService {
       },
     );
   }
+
+  public getTestersList(): Observable<any> {
+    return this.http.get(this.API_URL + 'user/testers', {
+      headers: this.headers,
+    });
+  }
 }

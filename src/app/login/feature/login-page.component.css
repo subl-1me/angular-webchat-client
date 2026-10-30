@@ -85,7 +85,6 @@
   animation: fadeUp 0.6s ease-out both;
 }
 
-/* Logo */
 .brand-logo {
   display: inline-flex;
   align-items: center;
@@ -166,6 +165,137 @@
   background: #ffffff;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
   flex-shrink: 0;
+}
+
+.testers-section {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.testers-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 1rem;
+}
+
+.testers-carousel-wrapper {
+  --tester-item-height: 66px;
+  --tester-gap: 0.75rem;
+
+  height: calc(var(--tester-item-height) * 3 + var(--tester-gap) * 2);
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+.testers-carousel-track {
+  display: flex;
+  flex-direction: column;
+  animation: scrollVertical 12s linear infinite;
+}
+
+.testers-carousel-wrapper:hover .testers-carousel-track {
+  animation-play-state: paused;
+}
+
+.testers-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.tester-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  transition: background-color 0.2s ease;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.tester-item:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.tester-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.tester-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.avatar-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tester-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ffffff;
+  box-shadow:
+    0 0 0 1px var(--border),
+    0 12px 28px -12px rgba(15, 20, 40, 0.25);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  display: block;
+}
+
+.tester-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.tester-role {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes scrollVertical {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
 }
 
 .login-form-panel {
@@ -316,55 +446,6 @@
   transform: none;
 }
 
-.btn-loading {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-}
-
-.spinner {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  border-top-color: #ffffff;
-  animation: spin 0.8s linear infinite;
-  flex-shrink: 0;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.form-error {
-  margin: 0.25rem 0 0;
-  padding: 0.7rem 0.9rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #b91c1c;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 10px;
-  text-align: center;
-  animation: shake 0.35s ease-out;
-}
-
-@keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-4px);
-  }
-  75% {
-    transform: translateX(4px);
-  }
-}
-
 .login-divider {
   display: flex;
   align-items: center;
@@ -452,7 +533,6 @@
   }
 }
 
-/* Móvil — apila secciones */
 @media (max-width: 820px) {
   .login-page {
     grid-template-columns: 1fr;
@@ -492,6 +572,11 @@
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 0.5rem;
+  }
+
+  .testers-carousel-wrapper {
+    max-width: 300px;
+    margin: 0 auto;
   }
 
   .login-form-panel {

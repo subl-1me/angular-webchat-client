@@ -1,7 +1,4 @@
 <div class="invite-container">
-  <!-- ============================================================
-       Cabecera: modo duo (nueva conversación)
-       ============================================================ -->
   <div class="invite-header invite-header-duo" *ngIf="inviteType === 'duo'">
     <span class="invite-mode-pill invite-mode-duo">New chat</span>
 
@@ -19,9 +16,6 @@
     </div>
   </div>
 
-  <!-- ============================================================
-       Cabecera: modo group (agregar a conversación existente)
-       ============================================================ -->
   <div class="invite-header invite-header-group" *ngIf="inviteType === 'group'">
     <span class="invite-mode-pill invite-mode-group">Add to group</span>
 
@@ -37,9 +31,6 @@
     </div>
   </div>
 
-  <!-- ============================================================
-       Campo de búsqueda
-       ============================================================ -->
   <div class="invite-search">
     <label for="invite-username" class="invite-search-label">
       Search user
@@ -47,7 +38,6 @@
 
     <div class="invite-search-input-wrap">
       <span class="invite-search-icon" aria-hidden="true">
-        <!-- icono lupa (inline svg, no requiere la librería) -->
         <svg
           viewBox="0 0 24 24"
           width="18"
@@ -78,22 +68,6 @@
     </div>
   </div>
 
-  <!-- ============================================================
-       Nota informativa (comentada por si la reactivas)
-       ============================================================ -->
-  <!--
-  <div class="invite-info">
-    <fa-icon [icon]="faInfoCircle" class="invite-info-icon"></fa-icon>
-    <div class="invite-info-text">
-      <p>You will be notified when a request was expired.</p>
-      <p>Users can decline or accept it.</p>
-    </div>
-  </div>
-  -->
-
-  <!-- ============================================================
-       Lista de usuarios encontrados
-       ============================================================ -->
   <div class="invite-results">
     <app-user-list [username]="username" [chatId]="chatId"></app-user-list>
   </div>

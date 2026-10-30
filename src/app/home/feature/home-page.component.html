@@ -1,11 +1,7 @@
 <div class="app-page">
   <app-navbar></app-navbar>
 
-  <!-- ============================================================
-     Shell principal (desktop)
-     ============================================================ -->
   <div class="home-shell">
-    <!-- Sidebar: lista de chats / requests -->
     <aside class="sidebar">
       <header class="sidebar-header">
         <button
@@ -67,7 +63,6 @@
       </div>
     </aside>
 
-    <!-- Área principal: chat o presentación -->
     <main class="main-area">
       <app-chat
         [selectedChat]="selectedChat"
@@ -81,9 +76,6 @@
     </main>
   </div>
 
-  <!-- ============================================================
-     Vista móvil (lista de chats a pantalla completa)
-     ============================================================ -->
   <div class="mobile-view d-none">
     <header class="sidebar-header">
       <button
@@ -149,9 +141,6 @@
     </div>
   </div>
 
-  <!-- ============================================================
-     Bottom navigation (solo móvil)
-     ============================================================ -->
   <nav class="mobile-bar" aria-label="Bottom navigation">
     <ul class="mobile-bar-nav">
       <li>
@@ -192,9 +181,6 @@
     </ul>
   </nav>
 
-  <!-- ============================================================
-     Modales (sin cambios estructurales, solo estilos)
-     ============================================================ -->
   <div
     class="modal fade"
     id="chatListModal"

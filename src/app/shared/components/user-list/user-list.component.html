@@ -1,12 +1,10 @@
 <div class="user-list">
-  <!-- Contador superior -->
   <div class="user-list-counter-row">
     <span class="user-list-counter">
       Users found: <strong>{{ users.length }}</strong>
     </span>
   </div>
 
-  <!-- Lista de usuarios -->
   <ng-container *ngFor="let user of users">
     <div class="user-list-item">
       <!-- Avatar -->
@@ -18,7 +16,6 @@
         />
       </div>
 
-      <!-- Información -->
       <div class="user-list-info">
         <h6 class="user-list-name">{{ user.username }}</h6>
         <small class="user-list-meta">
@@ -26,7 +23,6 @@
         </small>
       </div>
 
-      <!-- Acción -->
       <button
         type="button"
         class="user-list-action"

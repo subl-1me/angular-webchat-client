@@ -1,7 +1,4 @@
 <div class="register-page">
-  <!-- ============================================================
-       Panel de marca (izquierda)
-       ============================================================ -->
   <section class="register-brand">
     <div class="brand-content">
       <div class="brand-logo">
@@ -42,15 +39,11 @@
       </ul>
     </div>
 
-    <!-- Burbujas decorativas -->
     <span class="deco deco-1"></span>
     <span class="deco deco-2"></span>
     <span class="deco deco-3"></span>
   </section>
 
-  <!-- ============================================================
-       Panel del formulario (derecha)
-       ============================================================ -->
   <section class="register-form-panel">
     <div class="register-card">
       <header class="register-card-header">
@@ -96,7 +89,6 @@
           </div>
         </div>
 
-        <!-- Password + Confirm en 2 columnas en desktop -->
         <div class="field-row">
           <div class="field">
             <label for="register-password" class="field-label">Password</label>
@@ -131,7 +123,6 @@
           </div>
         </div>
 
-        <!-- Botón Crear cuenta (normal) -->
         <button
           type="button"
           class="btn-submit"
@@ -141,7 +132,6 @@
           Create account
         </button>
 
-        <!-- Botón Crear cuenta (loading) -->
         <button
           type="button"
           class="btn-submit btn-loading"
@@ -153,7 +143,6 @@
           <span>Creating...</span>
         </button>
 
-        <!-- Error del servicio -->
         <p
           id="serviceErrorMessage"
           *ngIf="serviceErrorMessage !== ''"

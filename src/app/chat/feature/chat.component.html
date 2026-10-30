@@ -1,11 +1,7 @@
 <div class="active-chat" *ngIf="selectedChat._id !== ''">
   <div class="chat-shell">
-    <!-- ============================================================
-         Header
-         ============================================================ -->
     <header class="chat-header" *ngIf="selectedChat._id !== ''">
       <div class="chat-header-left">
-        <!-- Avatar (chats duo) -->
         <div
           class="chat-header-avatar-wrap"
           *ngIf="!selectedChat.isGroup && selectedChat.participants.length > 0"
@@ -20,7 +16,6 @@
           </ng-container>
         </div>
 
-        <!-- Título + typing -->
         <div class="chat-header-info">
           <h4 class="chat-title" *ngIf="selectedChat.participants.length === 0">
             Only You
@@ -60,7 +55,6 @@
         </div>
       </div>
 
-      <!-- Menú de opciones -->
       <div class="chat-header-actions">
         <div class="dropdown">
           <button
@@ -226,7 +220,6 @@
             </div>
           </div>
 
-          <!-- Notificación: joined -->
           <div
             class="message-notification"
             *ngIf="
@@ -249,7 +242,6 @@
             </div>
           </div>
 
-          <!-- Notificación: left -->
           <div
             class="message-notification"
             *ngIf="
@@ -274,9 +266,6 @@
       </div>
     </div>
 
-    <!-- ============================================================
-         Usuarios escribiendo (grupo)
-         ============================================================ -->
     <div class="users-typing" *ngIf="selectedChat.isGroup">
       <ng-container *ngFor="let user of usersTyping">
         <div class="user-typing">
@@ -311,11 +300,7 @@
       </div>
     </div>
 
-    <!-- ============================================================
-         Controles de mensaje
-         ============================================================ -->
     <footer class="chat-composer">
-      <!-- Previews de imágenes cargadas -->
       <div class="composer-previews" *ngIf="loadedImages.length > 0">
         <ng-container *ngFor="let image of loadedImages">
           <div class="preloaded-image-wrapper">
@@ -355,7 +340,6 @@
         {{ imageServiceMessage }}
       </span>
 
-      <!-- Botón adjuntar (cuando no hay imágenes) -->
       <div class="composer-attach" *ngIf="loadedImages.length === 0">
         <label class="composer-file-btn" aria-label="Attach an image">
           <input
@@ -368,7 +352,6 @@
         <small class="composer-attach-label">Attach an image</small>
       </div>
 
-      <!-- Input + Send -->
       <div class="composer-row">
         <form
           sendMessageForm="ngForm"
@@ -423,9 +406,6 @@
     </footer>
   </div>
 
-  <!-- ============================================================
-       Modal: invitar
-       ============================================================ -->
   <div
     class="modal fade"
     id="inviteModalChat"
@@ -463,9 +443,6 @@
     </div>
   </div>
 
-  <!-- ============================================================
-       Modal: ajustes del chat
-       ============================================================ -->
   <div
     class="modal fade"
     id="chatSettingsModal"
@@ -518,9 +495,6 @@
     </div>
   </div>
 
-  <!-- ============================================================
-       Welcome container (bloque lógico inalcanzable actualmente)
-       ============================================================ -->
   <div class="welcome-container" *ngIf="selectedChat._id === ''">
     <div class="welcome-card">
       <img

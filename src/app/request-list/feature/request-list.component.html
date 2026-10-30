@@ -1,7 +1,4 @@
 <div class="request-list">
-  <!-- ============================================================
-       Pending requests (enviadas por el usuario, esperando respuesta)
-       ============================================================ -->
   <section class="pending-requests" *ngIf="pendingRequests.length > 0">
     <h6 class="pending-title">Pending requests</h6>
 
@@ -17,9 +14,6 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       Estado vacío
-       ============================================================ -->
   <div class="request-empty" *ngIf="requests.length === 0">
     <img
       src="../../../assets/images/no-data-illustration.webp.png"
@@ -32,13 +26,9 @@
     </p>
   </div>
 
-  <!-- ============================================================
-       Lista de requests recibidas
-       ============================================================ -->
   <div class="request-list-items">
     <ng-container *ngFor="let request of requests">
       <article class="request-item">
-        <!-- Badge de tipo (arriba izquierda) -->
         <span
           class="request-type-badge"
           [class.request-type-duo]="request.type === 'duo'"
@@ -56,7 +46,6 @@
           />
         </div>
 
-        <!-- Contenido -->
         <div class="request-content">
           <div class="request-meta">
             <span class="request-time">
@@ -111,7 +100,6 @@
           </div>
         </div>
 
-        <!-- Expiración -->
         <footer class="request-footer">
           <span class="request-expires">
             <span class="request-expires-dot" aria-hidden="true"></span>

@@ -1,5 +1,4 @@
 <div class="chat-list">
-  <!-- Estado vacío -->
   <ng-container *ngIf="chats.length === 0 && !isListLoading">
     <div class="chat-empty">
       <img
@@ -12,7 +11,6 @@
     </div>
   </ng-container>
 
-  <!-- Estado de carga -->
   <ng-container *ngIf="isListLoading">
     <div class="chat-skeleton-wrapper">
       <app-loader-skeleton></app-loader-skeleton>
@@ -21,7 +19,6 @@
     </div>
   </ng-container>
 
-  <!-- Lista de chats -->
   <ng-container *ngFor="let chat of chats">
     <div
       class="chat-item"
@@ -33,7 +30,6 @@
         'Open chat with ' + chat.participants.length + ' participants'
       "
     >
-      <!-- Badge de notificaciones (esquina) -->
       <div class="chat-item-badges">
         <ng-container *ngFor="let notification of messageNotifications">
           <span class="chat-badge" *ngIf="notification.chatId === chat._id">
@@ -45,7 +41,6 @@
       <!-- Avatar compuesto -->
       <div class="chat-avatar" *ngIf="chat.participants.length !== 0">
         <div class="chat-avatar-circle">
-          <!-- 1 participante -->
           <div
             class="avatar-grid"
             [class.avatar-grid-single]="chat.participants.length === 1"
@@ -72,7 +67,6 @@
             </ng-container>
           </div>
 
-          <!-- 3 participantes -->
           <div
             class="avatar-grid avatar-grid-triple"
             *ngIf="chat.participants.length === 3"
@@ -95,7 +89,6 @@
             </ng-container>
           </div>
 
-          <!-- 4 o más participantes -->
           <div
             class="avatar-grid avatar-grid-quad"
             *ngIf="chat.participants.length >= 4"
@@ -114,7 +107,6 @@
         </div>
       </div>
 
-      <!-- Contenido -->
       <div class="chat-content">
         <div class="chat-top">
           <h4 class="chat-title" *ngIf="chat.participants.length === 0">
@@ -141,7 +133,6 @@
           </h4>
         </div>
 
-        <!-- Primer mensaje -->
         <div
           class="chat-preview chat-preview-empty"
           *ngIf="chat.messages.length === 0 && chat.participants.length > 0"
@@ -149,7 +140,6 @@
           <span>Send the first message</span>
         </div>
 
-        <!-- Último mensaje -->
         <ng-container *ngFor="let message of chat.messages; last as last">
           <div class="chat-preview" *ngIf="last">
             <span
@@ -182,7 +172,6 @@
               {{ message.user.username }} sent a photo.
             </span>
 
-            <!-- Notificaciones -->
             <span
               class="chat-preview-text chat-preview-italic"
               *ngIf="

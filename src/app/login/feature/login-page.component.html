@@ -1,7 +1,4 @@
 <div class="login-page">
-  <!-- ============================================================
-       Panel de marca (izquierda)
-       ============================================================ -->
   <section class="login-brand">
     <div class="brand-content">
       <div class="brand-logo">
@@ -34,17 +31,63 @@
           Group chats &amp; invites
         </li>
       </ul>
+
+      <div class="testers-section">
+        <h3 class="testers-title">Our Testers ({{ testers.length }})</h3>
+
+        <div class="testers-carousel-wrapper">
+          <div class="testers-carousel-track">
+            <div class="testers-group">
+              <div
+                class="tester-item"
+                *ngFor="let tester of testers; trackBy: trackByTesterId"
+              >
+                <div class="avatar-wrap">
+                  <img
+                    class="tester-avatar"
+                    [src]="tester.avatar.url"
+                    [alt]="tester.username"
+                  />
+                </div>
+                <div class="tester-info">
+                  <span class="tester-name">{{ tester.username }}</span>
+                  <span class="tester-role"
+                    >Tester Since: {{ tester.createdAt | date }}</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="testers-group" aria-hidden="true">
+              <div
+                class="tester-item"
+                *ngFor="let tester of testers; trackBy: trackByTesterId"
+              >
+                <div class="avatar-wrap">
+                  <img
+                    class="tester-avatar"
+                    [src]="tester.avatar.url"
+                    [alt]="tester.username"
+                  />
+                </div>
+                <div class="tester-info">
+                  <span class="tester-name">{{ tester.username }}</span>
+                  <span class="tester-role"
+                    >Tester Since: {{ tester.createdAt | date }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Burbujas decorativas (puro CSS) -->
     <span class="deco deco-1"></span>
     <span class="deco deco-2"></span>
     <span class="deco deco-3"></span>
   </section>
 
-  <!-- ============================================================
-       Panel del formulario (derecha)
-       ============================================================ -->
   <section class="login-form-panel">
     <div class="login-card">
       <header class="login-card-header">
@@ -53,12 +96,11 @@
       </header>
 
       <form
+        class="login-form"
         [formGroup]="loginForm"
         (ngSubmit)="login()"
         novalidate
-        class="login-form"
       >
-        <!-- Username -->
         <div class="field">
           <label for="login-username" class="field-label">Username</label>
           <div class="field-control">
@@ -74,7 +116,6 @@
           </div>
         </div>
 
-        <!-- Password -->
         <div class="field">
           <label for="login-password" class="field-label">Password</label>
           <div class="field-control">
@@ -90,7 +131,6 @@
           </div>
         </div>
 
-        <!-- Botón Login (normal) -->
         <button
           type="submit"
           class="btn-submit"
@@ -100,7 +140,6 @@
           Log in
         </button>
 
-        <!-- Botón Login (loading) -->
         <button
           type="button"
           class="btn-submit btn-loading"
@@ -112,7 +151,6 @@
           <span>Loading...</span>
         </button>
 
-        <!-- Error -->
         <p
           id="serviceErrorMessage"
           *ngIf="serviceErrorMessage !== ''"
@@ -127,9 +165,7 @@
         <span>New here?</span>
       </div>
 
-      <a class="btn-secondary" [routerLink]="['/register']">
-        Create an account
-      </a>
+      <a class="btn-secondary" href="/register"> Create an account </a>
     </div>
   </section>
 </div>
