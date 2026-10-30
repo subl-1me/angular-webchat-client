@@ -380,7 +380,7 @@
           [disabled]="isSendingMessage"
           aria-label="Send message"
         >
-          <span class="btn-send-label" *ngIf="!isSendingMessage">
+          <span class="btn-send-label" *ngIf="isSendingMessage">
             Sending...
             <span class="composer-sending-msg-spinner" role="status">
               <span class="spinner"></span>
@@ -389,7 +389,7 @@
           </span>
           <fa-icon
             [icon]="faPaperPlane"
-            *ngIf="isSendingMessage"
+            *ngIf="!isSendingMessage"
             aria-hidden="true"
           ></fa-icon>
         </button>

@@ -234,6 +234,7 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
     this.setScrollDown('SEND_MESSAGE');
     this.message.chat = this.selectedChat._id;
     this.messageService.sendMessage(this.message).subscribe((response) => {
+      this.isSendingMessage = false;
       if (response.message === 'Chat expired.') {
         // Chat was expired, handle first
         alert(`This chat was expired. All data will be removed.`);
@@ -245,7 +246,6 @@ export class ChatComponent implements OnInit, OnChanges, DoCheck {
 
       if (response.errorCode || response.status === 'error') return; // Pending to add feedback
 
-      this.isSendingMessage = false;
       // Send socket with new message
       this.message.content = '';
       this.socketService.sendNewMessage(response.message);

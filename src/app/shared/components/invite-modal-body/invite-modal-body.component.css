@@ -235,11 +235,9 @@
 
 .invite-results {
   max-height: 42vh;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
   border-radius: 12px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(239, 71, 71, 0.25) transparent;
 }
 
 .invite-results::-webkit-scrollbar {
