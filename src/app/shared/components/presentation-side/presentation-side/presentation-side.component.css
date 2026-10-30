@@ -1,17 +1,4 @@
-/* ============================================================
-   Shell de presentación (tokens del design system)
-   ============================================================ */
 .presentation-shell {
-  --brand-1: #ef4747;
-  --brand-2: #ff7b7b;
-  --brand-3: #7c3aed;
-  --ink: #1f2230;
-  --muted: #6b7280;
-  --surface: #ffffff;
-  --surface-soft: #f7f8fb;
-  --border: #e6e8ef;
-  --focus: rgba(239, 71, 71, 0.18);
-
   height: 100%;
   min-height: 0;
   display: flex;
@@ -51,9 +38,6 @@
   animation: presentationIn 0.5s ease-out both;
 }
 
-/* ============================================================
-   Ilustración
-   ============================================================ */
 .presentation-illustration-wrap {
   position: relative;
   display: inline-flex;
@@ -62,7 +46,6 @@
   margin-bottom: 0.75rem;
 }
 
-/* Halo decorativo detrás de la ilustración (puro CSS) */
 .presentation-illustration-wrap::before {
   content: "";
   position: absolute;
@@ -84,9 +67,6 @@
   filter: drop-shadow(0 18px 36px rgba(15, 20, 40, 0.12));
 }
 
-/* ============================================================
-   Texto
-   ============================================================ */
 .presentation-title {
   font-size: 1.5rem;
   font-weight: 800;
@@ -103,9 +83,6 @@
   line-height: 1.5;
 }
 
-/* ============================================================
-   Botón "Create chat"
-   ============================================================ */
 .presentation-cta {
   display: inline-flex;
   align-items: center;
@@ -144,7 +121,6 @@
     0 12px 24px -12px rgba(239, 71, 71, 0.65);
 }
 
-/* Pequeña flecha animada al hacer hover */
 .presentation-cta-arrow {
   display: inline-block;
   transition: transform 0.2s ease;
@@ -154,9 +130,6 @@
   transform: translateX(3px);
 }
 
-/* ============================================================
-   Modal
-   ============================================================ */
 #inviteModal2 .modal-content {
   border: none;
   border-radius: 16px;
@@ -176,9 +149,6 @@
   letter-spacing: -0.2px;
 }
 
-/* ============================================================
-   Animaciones
-   ============================================================ */
 @keyframes presentationIn {
   from {
     opacity: 0;
@@ -190,9 +160,6 @@
   }
 }
 
-/* ============================================================
-   Accesibilidad
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .presentation-inner {
     animation: none !important;

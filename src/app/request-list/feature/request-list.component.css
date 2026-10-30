@@ -1,18 +1,4 @@
-/* ============================================================
-   Variables locales
-   ============================================================ */
 .request-list {
-  --brand-1: #ef4747;
-  --brand-2: #ff7b7b;
-  --brand-3: #7c3aed;
-  --ink: #1f2230;
-  --muted: #6b7280;
-  --surface: #ffffff;
-  --surface-soft: #f7f8fb;
-  --surface-hover: #fdf0f0;
-  --border: #e6e8ef;
-  --focus: rgba(239, 71, 71, 0.18);
-
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -42,9 +28,6 @@
   background-color: rgba(239, 71, 71, 0.45);
 }
 
-/* ============================================================
-   Pending requests (bloque superior)
-   ============================================================ */
 .pending-requests {
   padding: 0.75rem 0.85rem;
   border-radius: 14px;
@@ -102,9 +85,6 @@
   font-weight: 700;
 }
 
-/* ============================================================
-   Estado vacío
-   ============================================================ */
 .request-empty {
   display: flex;
   flex-direction: column;
@@ -150,18 +130,12 @@
   }
 }
 
-/* ============================================================
-   Lista de items
-   ============================================================ */
 .request-list-items {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
 }
 
-/* ============================================================
-   Item de request
-   ============================================================ */
 .request-item {
   position: relative;
   display: grid;
@@ -198,7 +172,6 @@
   }
 }
 
-/* Badge tipo (arriba izquierda) */
 .request-type-badge {
   position: absolute;
   top: -8px;
@@ -224,9 +197,6 @@
   box-shadow: 0 4px 10px -4px rgba(124, 58, 237, 0.55);
 }
 
-/* ============================================================
-   Avatar
-   ============================================================ */
 .request-avatar-wrap {
   flex-shrink: 0;
   align-self: flex-start;
@@ -254,9 +224,6 @@
     0 6px 16px -6px rgba(239, 71, 71, 0.35);
 }
 
-/* ============================================================
-   Contenido
-   ============================================================ */
 .request-content {
   min-width: 0;
   display: flex;
@@ -288,9 +255,6 @@
   font-weight: 700;
 }
 
-/* ============================================================
-   Controles (Accept / Decline)
-   ============================================================ */
 .request-controls {
   display: flex;
   flex-wrap: wrap;
@@ -298,7 +262,6 @@
   margin-top: 0.5rem;
 }
 
-/* Accept (primario) */
 .btn-accept {
   display: inline-flex;
   align-items: center;
@@ -343,7 +306,6 @@
   filter: saturate(0.7);
 }
 
-/* Decline (secundario) */
 .btn-decline {
   display: inline-flex;
   align-items: center;
@@ -389,12 +351,10 @@
   cursor: not-allowed;
 }
 
-/* Processing (spinner) */
 .btn-processing {
   pointer-events: none;
 }
 
-/* Spinner dentro del botón */
 .spinner {
   width: 14px;
   height: 14px;
@@ -411,9 +371,6 @@
   }
 }
 
-/* ============================================================
-   Footer (expiración)
-   ============================================================ */
 .request-footer {
   grid-column: 1 / -1;
   display: flex;
@@ -452,9 +409,6 @@
   }
 }
 
-/* ============================================================
-   Accesibilidad
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .request-item,
   .request-avatar,
@@ -475,9 +429,6 @@
   }
 }
 
-/* ============================================================
-   Responsive
-   ============================================================ */
 @media (max-width: 576px) {
   .request-list {
     padding: 0.35rem;

@@ -1,17 +1,4 @@
-/* ============================================================
-   App Navbar
-   ============================================================ */
 .app-navbar {
-  --brand-1: #ef4747;
-  --brand-2: #ff7b7b;
-  --brand-3: #7c3aed;
-  --ink: #1f2230;
-  --muted: #6b7280;
-  --surface: #ffffff;
-  --surface-soft: #f7f8fb;
-  --border: #e6e8ef;
-  --focus: rgba(239, 71, 71, 0.18);
-
   position: sticky;
   top: 0;
   z-index: 1030;
@@ -43,9 +30,6 @@
   margin: 0 auto;
 }
 
-/* ============================================================
-   Brand
-   ============================================================ */
 .app-brand {
   display: inline-flex;
   align-items: center;
@@ -88,16 +72,12 @@
   color: #ffffff;
 }
 
-/* ============================================================
-   Zona derecha
-   ============================================================ */
 .app-navbar-right {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
-/* Logout rápido (solo móvil) */
 .app-logout-quick {
   display: none;
   color: #ffffff;
@@ -119,9 +99,6 @@
   transform: translateY(-1px);
 }
 
-/* ============================================================
-   User trigger + avatar + dropdown
-   ============================================================ */
 .app-user {
   position: relative;
 }
@@ -184,9 +161,6 @@
   line-height: 1;
 }
 
-/* ============================================================
-   Dropdown menu (el que muestra Bootstrap)
-   ============================================================ */
 .user-dropdown {
   border: none;
   border-radius: 14px;
@@ -240,14 +214,12 @@
    Responsive
    ============================================================ */
 
-/* Tablet: nombre de usuario más corto */
 @media (max-width: 1024px) {
   .app-user-name {
     max-width: 100px;
   }
 }
 
-/* Móvil: aparece logout rápido, se oculta nombre de usuario en trigger */
 @media (max-width: 720px) {
   .app-navbar-inner {
     padding: 0.5rem 0.9rem;
@@ -296,9 +268,6 @@
   }
 }
 
-/* ============================================================
-   Accesibilidad
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .app-brand,
   .app-user-trigger,

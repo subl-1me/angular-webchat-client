@@ -1,18 +1,4 @@
-/* ============================================================
-   Chat shell (tokens del design system)
-   ============================================================ */
 .chat-shell {
-  --brand-1: #ef4747;
-  --brand-2: #ff7b7b;
-  --brand-3: #7c3aed;
-  --ink: #1f2230;
-  --muted: #6b7280;
-  --surface: #ffffff;
-  --surface-soft: #f7f8fb;
-  --surface-hover: #fdf0f0;
-  --border: #e6e8ef;
-  --focus: rgba(239, 71, 71, 0.18);
-
   display: flex;
   flex-direction: column;
   height: 90vh;
@@ -128,7 +114,6 @@
   box-shadow: 0 0 0 3px var(--focus);
 }
 
-/* Dropdown del header */
 .chat-dropdown-menu {
   border: none;
   border-radius: 12px;
@@ -167,9 +152,6 @@
   border-color: #f0f0f0;
 }
 
-/* ============================================================
-   Mensajes
-   ============================================================ */
 .chat-body {
   flex: 1 1 auto;
   min-height: 0;
@@ -328,9 +310,6 @@
   box-shadow: 0 10px 22px -8px rgba(15, 20, 40, 0.25);
 }
 
-/* ============================================================
-   Notificaciones de sistema (user-joined / user-left)
-   ============================================================ */
 .message-notification {
   display: flex;
   justify-content: center;
@@ -432,9 +411,6 @@
   font-weight: 500;
 }
 
-/* ============================================================
-   Banner no leídos
-   ============================================================ */
 .unread-banner-wrap {
   position: absolute;
   top: 76px;
@@ -480,9 +456,6 @@
   background: var(--surface-hover);
 }
 
-/* ============================================================
-   Composer (input + Send + adjuntos)
-   ============================================================ */
 .chat-composer {
   flex-shrink: 0;
   border-top: 1px solid var(--border);
@@ -577,7 +550,6 @@
   }
 }
 
-/* Botón adjuntar (label con icono) */
 .composer-file-btn {
   width: 36px;
   height: 36px;
@@ -638,7 +610,6 @@
   display: block;
 }
 
-/* Fila input + Send */
 .composer-row {
   display: flex;
   align-items: center;
@@ -675,7 +646,6 @@
   box-shadow: 0 0 0 4px var(--focus);
 }
 
-/* Botón Send principal */
 .btn-send {
   flex-shrink: 0;
   display: inline-flex;
@@ -716,7 +686,6 @@
   font-size: 0.85rem;
 }
 
-/* Botón mini (móvil) */
 .btn-send-mini {
   display: none;
   width: 44px;
@@ -745,9 +714,6 @@
   box-shadow: 0 0 0 4px var(--focus);
 }
 
-/* ============================================================
-   Modal: ajustes del chat
-   ============================================================ */
 .chat-settings-users {
   display: flex;
   flex-direction: column;
@@ -787,9 +753,6 @@
   font-style: italic;
 }
 
-/* ============================================================
-   Welcome container (bloque inalcanzable)
-   ============================================================ */
 .welcome-container {
   display: flex;
   align-items: center;
@@ -855,9 +818,6 @@
   box-shadow: 0 0 0 4px var(--focus);
 }
 
-/* ============================================================
-   Animaciones
-   ============================================================ */
 @keyframes messageIn {
   from {
     opacity: 0;
@@ -869,9 +829,6 @@
   }
 }
 
-/* ============================================================
-   Accesibilidad
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .message-row,
   .message-notification,
@@ -938,7 +895,6 @@
     padding: 0.6rem 0.85rem;
   }
 
-  /* Oculta el botón Send "grande", muestra el mini redondo */
   .btn-send {
     display: none;
   }

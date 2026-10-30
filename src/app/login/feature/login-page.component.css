@@ -1,17 +1,4 @@
-/* ============================================================
-   Variables locales del login
-   ============================================================ */
 .login-page {
-  --brand-1: #ef4747;
-  --brand-2: #ff7b7b;
-  --brand-3: #7c3aed;
-  --ink: #1f2230;
-  --muted: #6b7280;
-  --surface: #ffffff;
-  --surface-soft: #f7f8fb;
-  --border: #e6e8ef;
-  --focus: rgba(239, 71, 71, 0.18);
-
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1.1fr 1fr;
@@ -26,9 +13,6 @@
   overflow: hidden;
 }
 
-/* ============================================================
-   Panel de marca (izquierda)
-   ============================================================ */
 .login-brand {
   position: relative;
   overflow: hidden;
@@ -52,7 +36,6 @@
   isolation: isolate;
 }
 
-/* Burbujas decorativas puras */
 .deco {
   position: absolute;
   border-radius: 50%;
@@ -131,7 +114,6 @@
   color: #ffffff;
 }
 
-/* Ilustración */
 .brand-illustration {
   width: 100%;
   max-width: 280px;
@@ -140,7 +122,6 @@
   filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.25));
 }
 
-/* Título y subtítulo */
 .brand-title {
   font-size: clamp(2rem, 3.4vw, 2.85rem);
   font-weight: 800;
@@ -163,7 +144,6 @@
   color: #ffe3e3;
 }
 
-/* Lista de features */
 .brand-features {
   list-style: none;
   padding: 0;
@@ -188,9 +168,6 @@
   flex-shrink: 0;
 }
 
-/* ============================================================
-   Panel del formulario (derecha)
-   ============================================================ */
 .login-form-panel {
   display: flex;
   align-items: center;
@@ -240,9 +217,6 @@
   font-size: 0.92rem;
 }
 
-/* ============================================================
-   Formulario
-   ============================================================ */
 .login-form {
   display: flex;
   flex-direction: column;
@@ -295,9 +269,6 @@
   box-shadow: 0 0 0 4px var(--focus);
 }
 
-/* ============================================================
-   Botón principal
-   ============================================================ */
 .btn-submit {
   margin-top: 0.5rem;
   width: 100%;
@@ -345,7 +316,6 @@
   transform: none;
 }
 
-/* Spinner dentro del botón */
 .btn-loading {
   display: inline-flex;
   align-items: center;
@@ -369,9 +339,6 @@
   }
 }
 
-/* ============================================================
-   Error
-   ============================================================ */
 .form-error {
   margin: 0.25rem 0 0;
   padding: 0.7rem 0.9rem;
@@ -398,9 +365,6 @@
   }
 }
 
-/* ============================================================
-   Divider + botón secundario
-   ============================================================ */
 .login-divider {
   display: flex;
   align-items: center;
@@ -451,9 +415,6 @@
   box-shadow: 0 0 0 4px var(--focus);
 }
 
-/* ============================================================
-   Animaciones
-   ============================================================ */
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -465,9 +426,6 @@
   }
 }
 
-/* ============================================================
-   Accesibilidad — reducir movimiento
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .deco,
   .brand-content,
@@ -482,11 +440,6 @@
   }
 }
 
-/* ============================================================
-   Responsive
-   ============================================================ */
-
-/* Tablet — reduce padding del panel de marca */
 @media (max-width: 1024px) {
   .login-page {
     grid-template-columns: 1fr 1fr;
@@ -555,7 +508,6 @@
   }
 }
 
-/* Pantallas muy pequeñas */
 @media (max-width: 400px) {
   .brand-illustration {
     max-width: 130px;

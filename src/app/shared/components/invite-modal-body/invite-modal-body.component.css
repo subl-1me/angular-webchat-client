@@ -1,19 +1,4 @@
-/* ============================================================
-   Contenedor del modal
-   ============================================================ */
 .invite-container {
-  --brand-1: #ef4747;
-  --brand-2: #ff7b7b;
-  --brand-3: #7c3aed;
-  --ink: #1f2230;
-  --muted: #6b7280;
-  --surface: #ffffff;
-  --surface-soft: #f7f8fb;
-  --surface-hover: #fdf0f0;
-  --border: #e6e8ef;
-  --focus: rgba(239, 71, 71, 0.18);
-  --focus-purple: rgba(124, 58, 237, 0.18);
-
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -27,9 +12,6 @@
   color: var(--ink);
 }
 
-/* ============================================================
-   Cabecera (duo / group)
-   ============================================================ */
 .invite-header {
   display: flex;
   flex-direction: column;
@@ -43,7 +25,6 @@
   overflow: hidden;
 }
 
-/* Modo duo: rojo suave */
 .invite-header-duo {
   background:
     radial-gradient(circle at 0% 0%, rgba(239, 71, 71, 0.1), transparent 55%),
@@ -51,7 +32,6 @@
   border-color: rgba(239, 71, 71, 0.14);
 }
 
-/* Modo group: morado suave */
 .invite-header-group {
   background:
     radial-gradient(
@@ -63,7 +43,6 @@
   border-color: rgba(124, 58, 237, 0.16);
 }
 
-/* Pill de modo (arriba) */
 .invite-mode-pill {
   display: inline-block;
   padding: 0.3rem 0.75rem;
@@ -108,9 +87,6 @@
   line-height: 1.45;
 }
 
-/* ============================================================
-   Ilustración
-   ============================================================ */
 .invite-illustration-wrap {
   position: relative;
   display: inline-flex;
@@ -160,9 +136,6 @@
   }
 }
 
-/* ============================================================
-   Búsqueda
-   ============================================================ */
 .invite-search {
   display: flex;
   flex-direction: column;
@@ -233,9 +206,6 @@
   color: var(--brand-1);
 }
 
-/* ============================================================
-   Bloque informativo (por si reactivas el comentario)
-   ============================================================ */
 .invite-info {
   display: flex;
   align-items: flex-start;
@@ -263,9 +233,6 @@
   margin-top: 0.2rem;
 }
 
-/* ============================================================
-   Lista de usuarios
-   ============================================================ */
 .invite-results {
   max-height: 42vh;
   overflow-y: auto;
@@ -288,9 +255,6 @@
   background-color: rgba(239, 71, 71, 0.45);
 }
 
-/* ============================================================
-   Accesibilidad
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .invite-illustration {
     animation: none !important;
@@ -302,9 +266,6 @@
   }
 }
 
-/* ============================================================
-   Responsive
-   ============================================================ */
 @media (max-width: 576px) {
   .invite-header {
     padding: 1rem 0.75rem 1.25rem;

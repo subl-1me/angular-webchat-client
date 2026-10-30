@@ -1,6 +1,3 @@
-/* ============================================================
-   Wrapper de página (garantiza altura correcta en cualquier viewport)
-   ============================================================ */
 .app-page {
   display: flex;
   flex-direction: column;
@@ -16,25 +13,11 @@
     sans-serif;
 }
 
-/* ============================================================
-   Home shell
-   ============================================================ */
 .home-shell {
-  --brand-1: #ef4747;
-  --brand-2: #ff7b7b;
-  --brand-3: #7c3aed;
-  --ink: #1f2230;
-  --muted: #6b7280;
-  --surface: #ffffff;
-  --surface-soft: #f7f8fb;
-  --surface-hover: #fdf0f0;
-  --border: #e6e8ef;
-  --focus: rgba(239, 71, 71, 0.18);
-
   display: grid;
   grid-template-columns: 380px 1fr;
-  flex: 1 1 auto; /* ocupa el espacio restante */
-  min-height: 0; /* imprescindible para scroll interno */
+  flex: 1 1 auto;
+  min-height: 0;
   background: var(--surface-soft);
   color: var(--ink);
   overflow: hidden;
@@ -168,9 +151,6 @@
   min-height: 0;
 }
 
-/* ============================================================
-   Vista móvil
-   ============================================================ */
 .mobile-view {
   display: flex;
   flex-direction: column;
@@ -183,7 +163,7 @@
     system-ui,
     -apple-system,
     sans-serif;
-  padding-bottom: 64px; /* hueco para la bottom bar */
+  padding-bottom: 64px;
 }
 .mobile-view.d-none {
   display: none !important;
@@ -201,9 +181,6 @@
   min-height: 0;
 }
 
-/* ============================================================
-   Bottom nav (solo móvil)
-   ============================================================ */
 .mobile-bar {
   position: fixed;
   bottom: 0;
@@ -269,9 +246,6 @@
   padding: 0 4px;
 }
 
-/* ============================================================
-   Modales
-   ============================================================ */
 .modal-content {
   border: none;
   border-radius: 16px;
@@ -345,9 +319,6 @@
   }
 }
 
-/* ============================================================
-   Accesibilidad
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .btn-pill,
   .mobile-bar-link {

@@ -1,18 +1,4 @@
-/* ============================================================
-   Página
-   ============================================================ */
 .settings-page {
-  --brand-1: #ef4747;
-  --brand-2: #ff7b7b;
-  --brand-3: #7c3aed;
-  --ink: #1f2230;
-  --muted: #6b7280;
-  --surface: #ffffff;
-  --surface-soft: #f7f8fb;
-  --surface-hover: #fdf0f0;
-  --border: #e6e8ef;
-  --focus: rgba(239, 71, 71, 0.18);
-
   display: flex;
   justify-content: center;
   padding: 2rem 1rem;
@@ -38,9 +24,6 @@
   color: var(--ink);
 }
 
-/* ============================================================
-   Tarjeta
-   ============================================================ */
 .settings-card {
   width: 100%;
   max-width: 620px;
@@ -66,9 +49,6 @@
   }
 }
 
-/* ============================================================
-   Header (grid de 3 columnas para centrar el título)
-   ============================================================ */
 .settings-header {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -132,9 +112,6 @@
   width: 1rem;
 }
 
-/* ============================================================
-   Cuerpo
-   ============================================================ */
 .settings-body {
   padding: 1.5rem 1.5rem 1.25rem;
   display: flex;
@@ -142,9 +119,6 @@
   gap: 1.25rem;
 }
 
-/* ============================================================
-   Sección avatar
-   ============================================================ */
 .settings-avatar-section {
   display: flex;
   flex-direction: column;
@@ -191,7 +165,6 @@
     0 16px 32px -14px rgba(239, 71, 71, 0.35);
 }
 
-/* Botón editar (label del file input) */
 .settings-avatar-edit {
   position: absolute;
   right: 4px;
@@ -246,9 +219,6 @@
     0 6px 14px -6px rgba(239, 71, 71, 0.6);
 }
 
-/* ============================================================
-   Formulario
-   ============================================================ */
 .settings-form {
   display: flex;
   flex-direction: column;
@@ -297,9 +267,6 @@
   box-shadow: 0 0 0 4px var(--focus);
 }
 
-/* ============================================================
-   Botón Save
-   ============================================================ */
 .settings-save-btn {
   margin-top: 0.35rem;
   width: 100%;
@@ -368,9 +335,6 @@
   }
 }
 
-/* ============================================================
-   Feedback (error / éxito)
-   ============================================================ */
 .settings-feedback {
   margin: 0;
   padding: 0.65rem 0.85rem;
@@ -404,9 +368,6 @@
   }
 }
 
-/* ============================================================
-   Divider + zona peligrosa
-   ============================================================ */
 .settings-divider {
   border: 0;
   border-top: 1px dashed var(--border);
@@ -478,9 +439,6 @@
     0 8px 18px -8px rgba(220, 38, 38, 0.5);
 }
 
-/* ============================================================
-   Modal
-   ============================================================ */
 .settings-modal-content {
   border: none;
   border-radius: 18px;
@@ -597,9 +555,6 @@
   box-shadow: 0 8px 18px -8px rgba(0, 0, 0, 0.4);
 }
 
-/* ============================================================
-   Accesibilidad
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .settings-card,
   .settings-avatar,

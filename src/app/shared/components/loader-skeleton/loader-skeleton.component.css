@@ -1,6 +1,3 @@
-/* ============================================================
-   Skeleton loader — chat item
-   ============================================================ */
 .box.skeleton {
   width: 100%;
   min-height: 120px;
@@ -13,12 +10,10 @@
   position: relative;
 }
 
-/* Contenedor de la fila */
 .skeleton-row {
   align-items: center;
 }
 
-/* Línea de texto animada */
 .skeleton-line {
   height: 12px;
   border-radius: 4px;
@@ -32,7 +27,6 @@
   animation: skeleton-shimmer 1.4s ease-in-out infinite;
 }
 
-/* Círculos animados (avatar + badge) */
 .skeleton-circle,
 .skeleton-badge {
   background: linear-gradient(
@@ -58,7 +52,6 @@
   margin: 0 auto;
 }
 
-/* Keyframes: shimmer real (recorre el gradiente) */
 @keyframes skeleton-shimmer {
   0% {
     background-position: 200% 0;
@@ -68,9 +61,6 @@
   }
 }
 
-/* ============================================================
-   Accesibilidad: respetar prefers-reduced-motion
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .skeleton-line,
   .skeleton-circle,
